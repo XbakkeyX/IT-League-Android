@@ -7,9 +7,9 @@ import org.androidannotations.annotations.rest.RestService;
  * Created by Сергей on 19.06.2015.
  */
 @EBean
-public class LeagueApiClientProvider {
+public class ViolationsApiClientProvider {
     @RestService
-    /*package*/ LeagueApiClient apiClient;
+    /*package*/ ViolationsApiClient apiClient;
 
-    public LeagueApiClient getApiClient() {return this.apiClient;}
+    public ViolationsApiClient getApiClient() { return this.apiClient; }
 }
