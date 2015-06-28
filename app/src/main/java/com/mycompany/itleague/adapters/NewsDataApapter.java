@@ -20,8 +20,8 @@ public class NewsDataApapter extends ArrayAdapter<NewsMainData> {
 
     private static class ViewHolder {
         //TODO: Find out how the views must look;
-        TextView title;
-        TextView preview;
+        private TextView title;
+        private TextView preview;
     }
 
     public NewsDataApapter(Context context, List<NewsMainData> users) {

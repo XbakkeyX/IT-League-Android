@@ -1,12 +1,10 @@
 package com.mycompany.itleague.fragments;
 
 import android.support.v4.app.Fragment;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.mycompany.itleague.R;
-import com.mycompany.itleague.adapters.NewsDataApapter;
-import com.mycompany.itleague.manager.NewsApiClientProvider;
+import com.mycompany.itleague.manager.MainApiClientProvider;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -23,7 +21,7 @@ public class NewsInfoFragment extends Fragment {
     //TODO: Understand how to send the id of the chosen news;
     @Bean
     /*package*/
-    NewsApiClientProvider apiNewsClientProvider;
+    MainApiClientProvider apiNewsClientProvider;
 
     @ViewById
     /*package*/

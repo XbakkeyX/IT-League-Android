@@ -12,12 +12,12 @@ import java.util.List;
 public class NewsDataResponse {
 
     @JsonProperty("news_count")
-    private int new_count;
+    private int newCount;
 
     @JsonProperty("news")
     private List<NewsMainData> mainNewsData;
 
-    public int getNewCount () { return this.new_count; }
+    public int getNewCount () { return this.newCount; }
 
     public List<NewsMainData> getMainNewsData () { return this.mainNewsData; }
 }

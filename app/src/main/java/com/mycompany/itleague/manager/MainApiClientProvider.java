@@ -7,9 +7,9 @@ import org.androidannotations.annotations.rest.RestService;
  * Created by Сергей on 22.06.2015.
  */
     @EBean
-    public class NewsApiClientProvider {
+    public class MainApiClientProvider {
      @RestService
-     /*package*/ NewsApiClient apiClient;
+     /*package*/ MainApiClient apiClient;
 
-     public NewsApiClient getNewsApiClient(){return this.apiClient;}
+     public MainApiClient getNewsApiClient(){return this.apiClient;}
      }

@@ -27,8 +27,8 @@ import java.util.List;
 public class TableDataAdapter extends ArrayAdapter<TableMainData> {
 
     private static class ViewHolder {
-        TextView teamName;
-        TextView teamResults;
+        private TextView teamName;
+        private TextView teamResults;
     }
 
     public TableDataAdapter(Context context, List<TableMainData> users) {

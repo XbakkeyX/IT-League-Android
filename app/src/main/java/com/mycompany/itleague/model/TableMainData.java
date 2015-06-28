@@ -13,7 +13,7 @@ public class TableMainData {
     private String position;
 
     @JsonProperty("position_change")
-    private String position_change;
+    private String positionChange;
 
     @JsonProperty("team")
     private String team;
@@ -31,13 +31,13 @@ public class TableMainData {
     private String loses;
 
     @JsonProperty("goals_for")
-    private String goals_for;
+    private String goalsFor;
 
     @JsonProperty("goals_against")
-    private String goals_against;
+    private String goalsAgainst;
 
     @JsonProperty("goals_diff")
-    private String goals_diff;
+    private String goalsDiff;
 
     @JsonProperty("scores")
     private String scores;
@@ -47,7 +47,7 @@ public class TableMainData {
     }
 
     public String  getPositionChange () {
-        return this.position_change;
+        return this.positionChange;
     }
 
     public String  getTeam () {
@@ -71,15 +71,15 @@ public class TableMainData {
     }
 
     public String  getGoalsFor () {
-        return this.goals_for;
+        return this.goalsFor;
     }
 
     public String  getGoalsAgainst () {
-        return this.goals_against;
+        return this.goalsAgainst;
     }
 
     public String  getGoalsDiff () {
-        return this.goals_diff;
+        return this.goalsDiff;
     }
 
     public String  getScores () {

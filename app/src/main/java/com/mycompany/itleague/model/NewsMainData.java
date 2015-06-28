@@ -12,10 +12,10 @@ public class NewsMainData {
     private long id;
 
     @JsonProperty("created_at")
-    private String created_at;
+    private String createdAt;
 
     @JsonProperty("updated_at")
-    private String updated_at;
+    private String updatedAt;
 
     @JsonProperty("title")
     private String title;
@@ -27,7 +27,7 @@ public class NewsMainData {
     private String author;
 
     @JsonProperty("comments_count")
-    private long comments_count;
+    private long commentsCount;
 
     @JsonProperty("body")
     private String body;
@@ -35,9 +35,9 @@ public class NewsMainData {
 
     public long getId() {return this.id;}
 
-    public String getCreatedAt() { return this.created_at; }
+    public String getCreatedAt() { return this.createdAt; }
 
-    public String getUpdatedAt() { return this.updated_at; }
+    public String getUpdatedAt() { return this.updatedAt; }
 
     public String getTitle() { return this.title; }
 
@@ -45,7 +45,7 @@ public class NewsMainData {
 
     public String getAuthor() { return this.author; }
 
-    public long getCommentsCount () { return this.comments_count; }
+    public long getCommentsCount () { return this.commentsCount; }
 
     public String getBody() { return  this.body; }
 }

@@ -6,8 +6,7 @@ import android.widget.ListView;
 import com.mycompany.itleague.R;
 import com.mycompany.itleague.adapters.TableDataAdapter;
 import com.mycompany.itleague.adapters.ViolationsDataAdapter;
-import com.mycompany.itleague.manager.TableApiClientProvider;
-import com.mycompany.itleague.manager.ViolationsApiClientProvider;
+import com.mycompany.itleague.manager.MainApiClientProvider;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -22,11 +21,11 @@ import org.androidannotations.annotations.ViewById;
 @EFragment (R.layout.table)
 public class TableFragment extends Fragment {
 
-    TableDataAdapter adapter;
+    private TableDataAdapter adapter;
 
     @Bean
     /*package*/
-    TableApiClientProvider apiTableClientProvider;
+    MainApiClientProvider apiTableClientProvider;
 
     @ViewById
     /*package*/
@@ -34,11 +33,10 @@ public class TableFragment extends Fragment {
 
         @Background
     void updateTable() {
-        for (int i = 0; i < this.apiTableClientProvider.getTableApiClient().getTableData().getTableLeaguesData().size(); i++) {
-            for (int j = 0; j < this.apiTableClientProvider.getTableApiClient().getTableData().getTableLeaguesData().get(i).getLeagues().size(); j++) {
-                for (int y = 0; y < this.apiTableClientProvider.getTableApiClient().getTableData().getTableLeaguesData().get(i).getLeagues().get(j).getRowList().size(); y++) {
-
-                    adapter = new TableDataAdapter(getActivity(), this.apiTableClientProvider.getTableApiClient().getTableData().getTableLeaguesData().get(i).getLeagues().get(j).getRowList());
+        for (int i = 0; i < this.apiTableClientProvider.getNewsApiClient().getTableData().getTableLeaguesData().size(); i++) {
+            for (int j = 0; j < this.apiTableClientProvider.getNewsApiClient().getTableData().getTableLeaguesData().get(i).getLeagues().size(); j++) {
+                for (int y = 0; y < this.apiTableClientProvider.getNewsApiClient().getTableData().getTableLeaguesData().get(i).getLeagues().get(j).getRowList().size(); y++) {
+                    adapter = new TableDataAdapter(getActivity(), this.apiTableClientProvider.getNewsApiClient().getTableData().getTableLeaguesData().get(i).getLeagues().get(j).getRowList());
                     this.setTableInfo();
 
                 }

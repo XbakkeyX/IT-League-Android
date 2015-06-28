@@ -15,11 +15,11 @@ public class TableRowsData {
     private List<TableMainData> tableMainData;
 
     @JsonProperty("league_name")
-    private String league_name;
+    private String leagueName;
 
     public List<TableMainData> getRowList() {
         return this.tableMainData;
     }
 
-    public String getLeagueName () { return this.league_name; }
+    public String getLeagueName () { return this.leagueName; }
 }

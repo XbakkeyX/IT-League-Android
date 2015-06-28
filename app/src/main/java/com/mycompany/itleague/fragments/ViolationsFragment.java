@@ -9,8 +9,8 @@ import android.widget.ListView;
 
 import com.mycompany.itleague.R;
 import com.mycompany.itleague.adapters.ViolationsDataAdapter;
-import com.mycompany.itleague.manager.ViolationsApiClientProvider;
-import com.mycompany.itleague.model.ViolationsDataResponse;
+import com.mycompany.itleague.manager.MainApiClientProvider;
+
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -31,20 +31,20 @@ import java.util.List;
 @EFragment(R.layout.violtations)
 public class ViolationsFragment extends Fragment {
 
-    ViolationsDataAdapter adapter;
+    private ViolationsDataAdapter adapter;
 
     @Bean
     /*package*/
-            ViolationsApiClientProvider apiClientProvider;
+    MainApiClientProvider apiClientProvider;
 
     @ViewById
     /*package*/
-            ListView listViolations;
+    ListView listViolations;
 
     @Background
     void updateViolations() {
-        for(int i = 0; i<this.apiClientProvider.getApiClient().getViolationInfo().getMainViolationsData().size(); i++ ) {
-            adapter = new ViolationsDataAdapter(getActivity(), this.apiClientProvider.getApiClient().getViolationInfo().getMainViolationsData().get(i));
+        for(int i = 0; i<this.apiClientProvider.getNewsApiClient().getViolationInfo().getMainViolationsData().size(); i++ ) {
+            adapter = new ViolationsDataAdapter(getActivity(), this.apiClientProvider.getNewsApiClient().getViolationInfo().getMainViolationsData().get(i));
             this.setViolationInfo();
         }
     }

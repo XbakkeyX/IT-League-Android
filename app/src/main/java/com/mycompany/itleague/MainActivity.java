@@ -7,6 +7,8 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,9 +33,11 @@ import android.widget.ListView;
 import com.ikimuhendis.ldrawer.ActionBarDrawerToggle;
 import com.ikimuhendis.ldrawer.DrawerArrowDrawable;
 
+import org.androidannotations.annotations.EActivity;
 
 
-public class MainActivity extends Activity {
+@EActivity
+public class MainActivity extends FragmentActivity {
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -93,7 +97,7 @@ public class MainActivity extends Activity {
                                     int position, long id) {
                 switch (position) {
                     case 0:
-                        mDrawerToggle.setAnimateEnabled(false);
+
                         drawerArrow.setProgress(1f);
                         break;
                     case 1:

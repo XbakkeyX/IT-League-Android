@@ -26,7 +26,7 @@ import java.util.List;
 public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> {
     // View lookup cache
     private static class ViewHolder {
-        TextView name;
+        private TextView name;
     }
 
     public ViolationsDataAdapter(Context context, List<ViolationsMainData> users) {

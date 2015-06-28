@@ -5,11 +5,7 @@ import android.widget.ListView;
 
 import com.mycompany.itleague.R;
 import com.mycompany.itleague.adapters.NewsDataApapter;
-import com.mycompany.itleague.adapters.TableDataAdapter;
-import com.mycompany.itleague.adapters.ViolationsDataAdapter;
-import com.mycompany.itleague.manager.NewsApiClientProvider;
-import com.mycompany.itleague.manager.TableApiClientProvider;
-import com.mycompany.itleague.manager.ViolationsApiClientProvider;
+import com.mycompany.itleague.manager.MainApiClientProvider;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -23,13 +19,13 @@ import org.androidannotations.annotations.ViewById;
 @EFragment(R.layout.news)
 public class NewsFragment extends Fragment {
 
-    NewsDataApapter adapter;
-    int pageNumber;
-    int newsPerPage = 15;
+    private NewsDataApapter adapter;
+    private int pageNumber;
+    private int newsPerPage = 15;
 
     @Bean
     /*package*/
-    NewsApiClientProvider apiNewsClientProvider;
+    MainApiClientProvider apiNewsClientProvider;
 
     @ViewById
     /*package*/
