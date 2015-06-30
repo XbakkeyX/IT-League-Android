@@ -4,7 +4,7 @@ import android.support.v4.app.Fragment;
 import android.widget.ListView;
 
 import com.mycompany.itleague.R;
-import com.mycompany.itleague.adapters.NewsDataApapter;
+import com.mycompany.itleague.adapters.NewsDataAdapter;
 import com.mycompany.itleague.manager.MainApiClientProvider;
 
 import org.androidannotations.annotations.AfterViews;
@@ -19,7 +19,7 @@ import org.androidannotations.annotations.ViewById;
 @EFragment(R.layout.news)
 public class NewsFragment extends Fragment {
 
-    private NewsDataApapter adapter;
+    private NewsDataAdapter adapter;
     private int pageNumber;
     private int newsPerPage = 15;
 
@@ -34,7 +34,7 @@ public class NewsFragment extends Fragment {
     @Background
     void updateNews() {
         pageNumber = 1;
-        adapter = new NewsDataApapter(getActivity(), this.apiNewsClientProvider.getNewsApiClient().getListNews(pageNumber,newsPerPage).getMainNewsData());
+        adapter = new NewsDataAdapter(getActivity(), this.apiNewsClientProvider.getMainApiClient().getListNews(pageNumber,newsPerPage).getMainNewsData());
         this.setNewsInfo();
 
     }
@@ -47,7 +47,6 @@ public class NewsFragment extends Fragment {
 
     @AfterViews
     void newsDefault() {
-
         this.updateNews();
     }
 

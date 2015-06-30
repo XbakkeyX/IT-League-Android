@@ -10,6 +10,8 @@ import android.widget.ListView;
 import com.mycompany.itleague.R;
 import com.mycompany.itleague.adapters.ViolationsDataAdapter;
 import com.mycompany.itleague.manager.MainApiClientProvider;
+import com.mycompany.itleague.model.ViolationsConnectionData;
+import com.mycompany.itleague.model.ViolationsMainData;
 
 
 import org.androidannotations.annotations.AfterViews;
@@ -20,7 +22,10 @@ import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
 
 /**
@@ -31,22 +36,41 @@ import java.util.List;
 @EFragment(R.layout.violtations)
 public class ViolationsFragment extends Fragment {
 
+
     private ViolationsDataAdapter adapter;
+
+    public ArrayList<String> tours = new ArrayList<String>();
+
+    public ArrayList<String> getTours() {
+        return tours;
+    }
 
     @Bean
     /*package*/
-    MainApiClientProvider apiClientProvider;
+            MainApiClientProvider apiViolationsClientProvider;
 
     @ViewById
     /*package*/
-    ListView listViolations;
+            StickyListHeadersListView listViolations;
 
     @Background
     void updateViolations() {
-        for(int i = 0; i<this.apiClientProvider.getNewsApiClient().getViolationInfo().getMainViolationsData().size(); i++ ) {
-            adapter = new ViolationsDataAdapter(getActivity(), this.apiClientProvider.getNewsApiClient().getViolationInfo().getMainViolationsData().get(i));
-            this.setViolationInfo();
+
+        ViolationsConnectionData violationsConnectionData = this.apiViolationsClientProvider
+                .getMainApiClient().getViolationInfo().getMainViolationsData();
+        List<ViolationsMainData> violationsMainDataArrayList = new ArrayList<>();
+        for (ViolationsMainData violationsMainData : violationsConnectionData) {
+            violationsMainDataArrayList.addAll(violationsConnectionData.getViolationsMainData());
         }
+        String tmp = "";
+        for (int i = 0; i < violationsMainDataArrayList.size(); i++) {
+            if (tmp != violationsMainDataArrayList.get(i).getTeamName()) {
+                tmp = violationsMainDataArrayList.get(i).getTeamName();
+            }
+            tours.add(tmp);
+        }
+        adapter = new ViolationsDataAdapter(getActivity(), violationsMainDataArrayList);
+        this.setViolationInfo();
     }
 
     @UiThread

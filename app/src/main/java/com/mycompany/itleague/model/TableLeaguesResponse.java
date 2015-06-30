@@ -1,12 +1,12 @@
 package com.mycompany.itleague.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Сергей on 22.06.2015.
  */
-public class TableLeaguesResponse {
-    private List<TableLeaguesData> tableLeaguesData;
+public class TableLeaguesResponse extends ArrayList<TableLeaguesData> {
 
-    public List<TableLeaguesData> getTableLeaguesData() { return this.tableLeaguesData; }
+    public ArrayList<TableLeaguesData> getTableLeaguesData() { return this; }
 }

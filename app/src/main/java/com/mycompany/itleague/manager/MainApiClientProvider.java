@@ -11,5 +11,5 @@ import org.androidannotations.annotations.rest.RestService;
      @RestService
      /*package*/ MainApiClient apiClient;
 
-     public MainApiClient getNewsApiClient(){return this.apiClient;}
+     public MainApiClient getMainApiClient(){return this.apiClient;}
      }

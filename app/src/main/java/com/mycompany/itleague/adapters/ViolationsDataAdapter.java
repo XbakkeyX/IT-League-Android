@@ -12,21 +12,74 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.mycompany.itleague.R;
+import com.mycompany.itleague.fragments.ViolationsFragment;
 import com.mycompany.itleague.model.ViolationsDataResponse;
 import com.mycompany.itleague.model.ViolationsMainData;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
+
 /**
  * Created by Сергей on 25.06.2015.
  */
 
 
-public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> {
-    // View lookup cache
+public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> implements
+        StickyListHeadersAdapter {
+
+    ViolationsFragment tmp = new ViolationsFragment();
+
+    public ArrayList<String> tours = tmp.getTours();
+
+    ViolationsMainData user;
+
+    @Override
+    public View getHeaderView(int position, View convertView, ViewGroup parent) {
+        HeaderViewHolder holder;
+        user = getItem(position);
+        if (convertView == null) {
+            holder = new HeaderViewHolder();
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            convertView = inflater.inflate(R.layout.violations_header, parent, false);
+            holder.tour = (TextView) convertView.findViewById(R.id.textHeaderViolations);
+            convertView.setTag(holder);
+        } else {
+            holder = (HeaderViewHolder) convertView.getTag();
+        }
+        String headerText;
+
+        for (int i = 0; i < tours.size(); i++) {
+            if (user.getTourName() == tours.get(i)) {
+                headerText = tours.get(i);
+                holder.tour.setText(headerText);
+            }
+        }
+        return convertView;
+    }
+
+    @Override
+    public long getHeaderId(int position) {
+        user = getItem(position);
+        long tmp = 0;
+        for (int i = 0; i < tours.size(); i++) {
+            if (user.getTourName() == tours.get(i)) {
+                tmp = i;
+            }
+        }
+        return tmp;
+    }
+
+
     private static class ViewHolder {
+
         private TextView name;
+    }
+
+    private static class HeaderViewHolder {
+
+        private TextView tour;
     }
 
     public ViolationsDataAdapter(Context context, List<ViolationsMainData> users) {
@@ -35,7 +88,7 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViolationsMainData user = getItem(position);
+        user = getItem(position);
         ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
@@ -48,8 +101,10 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> {
         }
         String teamName = new String(user.getTeamName());
         Spannable wordtoSpan = new SpannableString(teamName);
-        wordtoSpan.setSpan(new ForegroundColorSpan(Color.BLUE), 0, teamName.length() , Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        viewHolder.name.setText(user.getFirstName() + " " + user.getSecondName() + " ( " + teamName + ") ");
+        wordtoSpan.setSpan(new ForegroundColorSpan(Color.BLUE), 0, teamName.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        viewHolder.name.setText(
+                user.getFirstName() + " " + user.getSecondName() + " ( " + teamName + ") ");
 
         return convertView;
     }

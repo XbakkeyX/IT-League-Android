@@ -16,15 +16,14 @@ import java.util.List;
 /**
  * Created by Сергей on 26.06.2015.
  */
-public class NewsDataApapter extends ArrayAdapter<NewsMainData> {
+public class NewsDataAdapter extends ArrayAdapter<NewsMainData> {
 
     private static class ViewHolder {
-        //TODO: Find out how the views must look;
         private TextView title;
         private TextView preview;
     }
 
-    public NewsDataApapter(Context context, List<NewsMainData> users) {
+    public NewsDataAdapter(Context context, List<NewsMainData> users) {
         super(context, R.layout.news_view, users);
     }
 

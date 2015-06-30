@@ -14,9 +14,9 @@ import java.util.List;
 public class ViolationsDataResponse {
 
     @JsonProperty("violations")
-    private List<List<ViolationsMainData>> violations;
+    private ViolationsConnectionData violations;
 
-    public List<List<ViolationsMainData>> getMainViolationsData()
+    public ViolationsConnectionData getMainViolationsData()
     {
         return violations;
     }
