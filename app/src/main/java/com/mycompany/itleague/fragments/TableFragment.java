@@ -4,11 +4,13 @@ import android.support.v4.app.Fragment;
 import android.widget.ListView;
 
 import com.mycompany.itleague.R;
+import com.mycompany.itleague.adapters.TableAdapter;
 import com.mycompany.itleague.adapters.TableDataAdapter;
 import com.mycompany.itleague.adapters.ViolationsDataAdapter;
 import com.mycompany.itleague.manager.MainApiClientProvider;
 import com.mycompany.itleague.model.TableLeaguesData;
 import com.mycompany.itleague.model.TableLeaguesResponse;
+import com.mycompany.itleague.model.TableMainData;
 import com.mycompany.itleague.model.TableRowsData;
 
 import org.androidannotations.annotations.AfterViews;
@@ -35,6 +37,10 @@ public class TableFragment extends Fragment {
 
     ArrayList<TableRowsData> tableRowsDataArrayList = new ArrayList<TableRowsData>();
 
+    ArrayList<TableMainData> tableMainDatas = new ArrayList<TableMainData>();
+
+    ArrayList<TableAdapter> mTableAdapter = new ArrayList<TableAdapter>();
+
     public ArrayList<String> getLeagueName() {
         return leagueName;
     }
@@ -43,11 +49,15 @@ public class TableFragment extends Fragment {
         return this.tableRowsDataArrayList;
     }
 
+    public ArrayList<TableMainData> getTableMainDatas() {
+        return this.tableMainDatas;
+    }
+
     @Bean
     /*package*/
             MainApiClientProvider apiTableClientProvider;
 
-    @ViewById
+    @ViewById(R.id.listTableView)
     /*package*/
             StickyListHeadersListView listTableView;
 
@@ -58,16 +68,28 @@ public class TableFragment extends Fragment {
         for (TableLeaguesData tableLeaguesData : tableLeaguesResponse) {
             tableRowsDataArrayList.addAll(tableLeaguesData.getLeagues());
         }
+
+        for (int i = 0; i < tableRowsDataArrayList.size(); i++) {
+            tableMainDatas.addAll(tableRowsDataArrayList.get(i).getRowList());
+        }
         String tmp = "";
         for (int i = 0; i < tableRowsDataArrayList.size(); i++) {
             if (tmp != tableRowsDataArrayList.get(i).getLeagueName()) {
                 tmp = tableRowsDataArrayList.get(i).getLeagueName();
                 leagueName.add(tmp);
             }
-
         }
 
-        adapter = new TableDataAdapter(getActivity(), tableRowsDataArrayList);
+        for(int i = 0 ; i<tableRowsDataArrayList.size(); i ++){
+            for(int j = 0; j<tableRowsDataArrayList.get(i).getRowList().size(); j++){
+                TableAdapter parser = new TableAdapter();
+                parser.setLeagueName(tableRowsDataArrayList.get(i).getLeagueName());
+                parser.setTableMainDatas(tableRowsDataArrayList.get(i).getRowList().get(j));
+                mTableAdapter.add(parser);
+            }
+        }
+
+        adapter = new TableDataAdapter(getActivity(), mTableAdapter);
         this.setTableInfo();
     }
 

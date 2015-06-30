@@ -28,14 +28,12 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
  */
 
 
-public class TableDataAdapter extends ArrayAdapter<TableRowsData> implements
+public class TableDataAdapter extends ArrayAdapter<TableAdapter> implements
         StickyListHeadersAdapter {
 
-    private TableFragment tmp = new TableFragment();
+    private ArrayList<String> leagueName = new ArrayList<String>();
 
-    private ArrayList<String> leagueName = tmp.getLeagueName();
-
-    TableRowsData user;
+    TableAdapter user;
 
     @Override
     public View getHeaderView(int position, View convertView, ViewGroup parent) {
@@ -50,14 +48,13 @@ public class TableDataAdapter extends ArrayAdapter<TableRowsData> implements
         } else {
             holder = (HeaderViewHolder) convertView.getTag();
         }
-        String headerText;
-
+        String headerText = new String();
         for (int i = 0; i < leagueName.size(); i++) {
             if (user.getLeagueName() == leagueName.get(i)) {
                 headerText = leagueName.get(i);
-                holder.leagueName.setText(headerText);
             }
         }
+        holder.leagueName.setText(headerText);
         return convertView;
     }
 
@@ -85,8 +82,15 @@ public class TableDataAdapter extends ArrayAdapter<TableRowsData> implements
         private TextView leagueName;
     }
 
-    public TableDataAdapter(Context context, ArrayList<TableRowsData> users) {
+    public TableDataAdapter(Context context, ArrayList<TableAdapter> users) {
         super(context, R.layout.table_view, users);
+        String tmp = "";
+        for(int i = 0; i< users.size(); i++){
+            if(tmp!= users.get(i).getLeagueName()){
+                tmp = users.get(i).getLeagueName();
+                leagueName.add(tmp);
+            }
+        }
     }
 
     @Override
@@ -104,11 +108,10 @@ public class TableDataAdapter extends ArrayAdapter<TableRowsData> implements
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        viewHolder.teamName.setText(user.getRowList().get(position).getTeam());
+        viewHolder.teamName.setText(user.getTableMainDatas().getTeam());
         viewHolder.teamResults.setText(
-                user.getRowList().get(position).getGames() + " " + user.getRowList().get(position)
-                        .getWins() + " " + user.getRowList().get(position).getDraws() + " " +
-                        user.getRowList().get(position).getLoses());
+                user.getTableMainDatas().getGames() + " " + user.getTableMainDatas().getWins() + " " + user.getTableMainDatas().getDraws() + " " +
+                        user.getTableMainDatas().getLoses());
         return convertView;
     }
 }

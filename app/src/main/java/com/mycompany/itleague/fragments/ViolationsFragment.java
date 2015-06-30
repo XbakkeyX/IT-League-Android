@@ -49,7 +49,7 @@ public class ViolationsFragment extends Fragment {
     /*package*/
             MainApiClientProvider apiViolationsClientProvider;
 
-    @ViewById
+    @ViewById(R.id.listViolations)
     /*package*/
             StickyListHeadersListView listViolations;
 
