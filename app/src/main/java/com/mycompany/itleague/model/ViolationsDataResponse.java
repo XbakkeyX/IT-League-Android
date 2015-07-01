@@ -3,6 +3,7 @@ package com.mycompany.itleague.model;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,9 +15,9 @@ import java.util.List;
 public class ViolationsDataResponse {
 
     @JsonProperty("violations")
-    private ViolationsConnectionData violations;
+    private ArrayList<ArrayList<ViolationsMainData>> violations;
 
-    public ViolationsConnectionData getMainViolationsData()
+    public ArrayList<ArrayList<ViolationsMainData>> getMainViolationsData()
     {
         return violations;
     }

@@ -15,8 +15,8 @@ public class ViolationsMainData {
     @JsonProperty("first_name")
     private String firstName;
 
-    @JsonProperty("second_name")
-    private String secondName;
+    @JsonProperty("last_name")
+    private String lastName;
 
     @JsonProperty("stats_name")
     private String statsName;
@@ -32,8 +32,8 @@ public class ViolationsMainData {
         return this.firstName;
     }
 
-    public String  getSecondName () {
-        return this.secondName;
+    public String getLastName() {
+        return this.lastName;
     }
 
     public String  getStatsName () {

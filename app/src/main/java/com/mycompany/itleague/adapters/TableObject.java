@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * Created by Сергей on 30.06.2015.
  */
-public class TableAdapter {
+public class TableObject {
     //TableFragment tf = new TableFragment();
     private String leagueName = new String();
 

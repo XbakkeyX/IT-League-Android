@@ -125,14 +125,12 @@ public class MainActivity extends FragmentActivity {
                                 .replace(R.id.fragmentContainer, fragmentViolations)
                                 .addToBackStack(null)
                                 .commitAllowingStateLoss();
-
                         break;
                     case 3:
                         fragmentManager.beginTransaction()
                                 .replace(R.id.fragmentContainer, fragmentTable)
                                 .addToBackStack(null)
                                 .commitAllowingStateLoss();
-
                         break;
                 }
 

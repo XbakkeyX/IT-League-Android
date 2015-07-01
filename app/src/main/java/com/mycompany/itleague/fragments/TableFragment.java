@@ -1,12 +1,10 @@
 package com.mycompany.itleague.fragments;
 
 import android.support.v4.app.Fragment;
-import android.widget.ListView;
 
 import com.mycompany.itleague.R;
-import com.mycompany.itleague.adapters.TableAdapter;
+import com.mycompany.itleague.adapters.TableObject;
 import com.mycompany.itleague.adapters.TableDataAdapter;
-import com.mycompany.itleague.adapters.ViolationsDataAdapter;
 import com.mycompany.itleague.manager.MainApiClientProvider;
 import com.mycompany.itleague.model.TableLeaguesData;
 import com.mycompany.itleague.model.TableLeaguesResponse;
@@ -30,28 +28,16 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 @EFragment(R.layout.table)
 public class TableFragment extends Fragment {
 
-
     private TableDataAdapter adapter;
 
-    public ArrayList<String> leagueName = new ArrayList<String>();
+    private ArrayList<TableRowsData> tableRowsDataArrayList = new ArrayList<TableRowsData>();
 
-    ArrayList<TableRowsData> tableRowsDataArrayList = new ArrayList<TableRowsData>();
-
-    ArrayList<TableMainData> tableMainDatas = new ArrayList<TableMainData>();
-
-    ArrayList<TableAdapter> mTableAdapter = new ArrayList<TableAdapter>();
-
-    public ArrayList<String> getLeagueName() {
-        return leagueName;
-    }
+    private ArrayList<TableObject> tableObjects = new ArrayList<TableObject>();
 
     public ArrayList<TableRowsData> getTableRows() {
         return this.tableRowsDataArrayList;
     }
 
-    public ArrayList<TableMainData> getTableMainDatas() {
-        return this.tableMainDatas;
-    }
 
     @Bean
     /*package*/
@@ -70,26 +56,15 @@ public class TableFragment extends Fragment {
         }
 
         for (int i = 0; i < tableRowsDataArrayList.size(); i++) {
-            tableMainDatas.addAll(tableRowsDataArrayList.get(i).getRowList());
-        }
-        String tmp = "";
-        for (int i = 0; i < tableRowsDataArrayList.size(); i++) {
-            if (tmp != tableRowsDataArrayList.get(i).getLeagueName()) {
-                tmp = tableRowsDataArrayList.get(i).getLeagueName();
-                leagueName.add(tmp);
+            for (int j = 0; j < tableRowsDataArrayList.get(i).getRowList().size(); j++) {
+                TableObject tableObject = new TableObject();
+                tableObject.setLeagueName(tableRowsDataArrayList.get(i).getLeagueName());
+                tableObject.setTableMainDatas(tableRowsDataArrayList.get(i).getRowList().get(j));
+                tableObjects.add(tableObject);
             }
         }
 
-        for(int i = 0 ; i<tableRowsDataArrayList.size(); i ++){
-            for(int j = 0; j<tableRowsDataArrayList.get(i).getRowList().size(); j++){
-                TableAdapter parser = new TableAdapter();
-                parser.setLeagueName(tableRowsDataArrayList.get(i).getLeagueName());
-                parser.setTableMainDatas(tableRowsDataArrayList.get(i).getRowList().get(j));
-                mTableAdapter.add(parser);
-            }
-        }
-
-        adapter = new TableDataAdapter(getActivity(), mTableAdapter);
+        adapter = new TableDataAdapter(getActivity(), tableObjects);
         this.setTableInfo();
     }
 

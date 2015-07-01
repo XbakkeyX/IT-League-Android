@@ -36,7 +36,6 @@ public class NewsFragment extends Fragment {
         pageNumber = 1;
         adapter = new NewsDataAdapter(getActivity(), this.apiNewsClientProvider.getMainApiClient().getListNews(pageNumber,newsPerPage).getMainNewsData());
         this.setNewsInfo();
-
     }
 
 

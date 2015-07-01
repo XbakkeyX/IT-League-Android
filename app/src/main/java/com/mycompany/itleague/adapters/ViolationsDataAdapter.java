@@ -12,12 +12,9 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.mycompany.itleague.R;
-import com.mycompany.itleague.fragments.ViolationsFragment;
-import com.mycompany.itleague.model.ViolationsDataResponse;
 import com.mycompany.itleague.model.ViolationsMainData;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
@@ -29,9 +26,7 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> implements
         StickyListHeadersAdapter {
 
-    ViolationsFragment tmp = new ViolationsFragment();
-
-    public ArrayList<String> tours = tmp.getTours();
+    public ArrayList<String> tours = new ArrayList<String>();
 
     ViolationsMainData user;
 
@@ -48,7 +43,7 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> impl
         } else {
             holder = (HeaderViewHolder) convertView.getTag();
         }
-        String headerText;
+        String headerText = "";
 
         for (int i = 0; i < tours.size(); i++) {
             if (user.getTourName() == tours.get(i)) {
@@ -64,7 +59,7 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> impl
         user = getItem(position);
         long tmp = 0;
         for (int i = 0; i < tours.size(); i++) {
-            if (user.getTourName() == tours.get(i)) {
+            if (user.getTourName().equals(tours.get(i))) {
                 tmp = i;
             }
         }
@@ -82,8 +77,16 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> impl
         private TextView tour;
     }
 
-    public ViolationsDataAdapter(Context context, List<ViolationsMainData> users) {
+    public ViolationsDataAdapter(Context context, ArrayList<ViolationsMainData> users) {
         super(context, R.layout.violations_view, users);
+        String tour = "";
+        for(int i = 0; i< users.size(); i++)
+            if(!(tour.equals(users.get(i).getTourName()))) {
+                tour = users.get(i).getTourName();
+                tours.add(tour);
+            }
+
+
     }
 
     @Override
@@ -99,12 +102,12 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> impl
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        String teamName = new String(user.getTeamName());
+        String teamName = user.getTeamName();
         Spannable wordtoSpan = new SpannableString(teamName);
         wordtoSpan.setSpan(new ForegroundColorSpan(Color.BLUE), 0, teamName.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         viewHolder.name.setText(
-                user.getFirstName() + " " + user.getSecondName() + " ( " + teamName + ") ");
+                user.getFirstName() + " " + user.getLastName() + " ( " + teamName + ") ");
 
         return convertView;
     }

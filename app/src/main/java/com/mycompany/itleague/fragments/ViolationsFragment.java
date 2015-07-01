@@ -36,14 +36,13 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 @EFragment(R.layout.violtations)
 public class ViolationsFragment extends Fragment {
 
-
     private ViolationsDataAdapter adapter;
 
-    public ArrayList<String> tours = new ArrayList<String>();
+   // public ArrayList<String> tours = new ArrayList<String>();
 
-    public ArrayList<String> getTours() {
+/*    public ArrayList<String> getTours() {
         return tours;
-    }
+    }*/
 
     @Bean
     /*package*/
@@ -56,19 +55,19 @@ public class ViolationsFragment extends Fragment {
     @Background
     void updateViolations() {
 
-        ViolationsConnectionData violationsConnectionData = this.apiViolationsClientProvider
-                .getMainApiClient().getViolationInfo().getMainViolationsData();
-        List<ViolationsMainData> violationsMainDataArrayList = new ArrayList<>();
-        for (ViolationsMainData violationsMainData : violationsConnectionData) {
-            violationsMainDataArrayList.addAll(violationsConnectionData.getViolationsMainData());
+        ArrayList<ViolationsMainData> violationsMainDataArrayList = new ArrayList<ViolationsMainData>();
+        ArrayList<ArrayList<ViolationsMainData>> violationsArrayList =  apiViolationsClientProvider.getMainApiClient().getViolationInfo().getMainViolationsData();
+        for (int i = 0; i < violationsArrayList.size(); i++) {
+            for(int j = 0; j < violationsArrayList.get(i).size(); j++)
+            violationsMainDataArrayList.add(violationsArrayList.get(i).get(j));
         }
-        String tmp = "";
+/*        String tmp = "";
         for (int i = 0; i < violationsMainDataArrayList.size(); i++) {
             if (tmp != violationsMainDataArrayList.get(i).getTeamName()) {
                 tmp = violationsMainDataArrayList.get(i).getTeamName();
             }
             tours.add(tmp);
-        }
+        }*/
         adapter = new ViolationsDataAdapter(getActivity(), violationsMainDataArrayList);
         this.setViolationInfo();
     }

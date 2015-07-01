@@ -1,10 +1,6 @@
 package com.mycompany.itleague.adapters;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.mycompany.itleague.R;
-import com.mycompany.itleague.fragments.TableFragment;
-import com.mycompany.itleague.model.TableLeaguesData;
-import com.mycompany.itleague.model.TableMainData;
-import com.mycompany.itleague.model.TableRowsData;
-import com.mycompany.itleague.model.ViolationsDataResponse;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 
@@ -28,12 +18,12 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
  */
 
 
-public class TableDataAdapter extends ArrayAdapter<TableAdapter> implements
+public class TableDataAdapter extends ArrayAdapter<TableObject> implements
         StickyListHeadersAdapter {
 
     private ArrayList<String> leagueName = new ArrayList<String>();
 
-    TableAdapter user;
+    TableObject user;
 
     @Override
     public View getHeaderView(int position, View convertView, ViewGroup parent) {
@@ -82,13 +72,13 @@ public class TableDataAdapter extends ArrayAdapter<TableAdapter> implements
         private TextView leagueName;
     }
 
-    public TableDataAdapter(Context context, ArrayList<TableAdapter> users) {
+    public TableDataAdapter(Context context, ArrayList<TableObject> users) {
         super(context, R.layout.table_view, users);
-        String tmp = "";
+        String league = "";
         for(int i = 0; i< users.size(); i++){
-            if(tmp!= users.get(i).getLeagueName()){
-                tmp = users.get(i).getLeagueName();
-                leagueName.add(tmp);
+            if(league!= users.get(i).getLeagueName()){
+                league = users.get(i).getLeagueName();
+                leagueName.add(league);
             }
         }
     }
