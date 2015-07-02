@@ -1,6 +1,9 @@
 package com.mycompany.itleague.adapters;
 
 import android.content.Context;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +37,7 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.table_header, parent, false);
             holder.league = (TextView) convertView.findViewById(R.id.textHeaderTable);
+            holder.goals = (TextView) convertView.findViewById(R.id.goals);
             convertView.setTag(holder);
         } else {
             holder = (HeaderViewHolder) convertView.getTag();
@@ -44,6 +48,9 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
                 headerText = leagueName.get(i);
             }
         }
+        String first = "<font color='#00A42E'>+</font>" + "/";
+        String next = "<font color='#EE0000'>-</font>";
+        holder.goals.setText(Html.fromHtml(first + next));
         holder.league.setText(headerText);
         return convertView;
     }
@@ -82,6 +89,8 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
     private static class HeaderViewHolder {
 
         private TextView league;
+
+        private TextView goals;
     }
 
     public TableDataAdapter(Context context, ArrayList<TableObject> users) {
@@ -122,8 +131,12 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
         viewHolder.teamLoses.setText(user.getTableMainDatas().getLoses());
         viewHolder.teamDraws.setText(user.getTableMainDatas().getDraws());
         viewHolder.teamScores.setText(user.getTableMainDatas().getScores());
-        viewHolder.teamGoals.setText(user.getTableMainDatas().getGoalsFor() + "/" + user.getTableMainDatas().getGoalsAgainst());
-
+        String first = user.getTableMainDatas().getGoalsFor();
+        String next = user.getTableMainDatas().getGoalsAgainst();
+        viewHolder.teamGoals.setText(first + "/" + next, TextView.BufferType.SPANNABLE);
+        Spannable s = (Spannable)viewHolder.teamGoals.getText();
+        s.setSpan(new ForegroundColorSpan(0xFFFF0000),  first.length()+1,  first.length()+1 + next.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        s.setSpan(new ForegroundColorSpan(0xFF00AF5A), 0, first.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return convertView;
     }
 }

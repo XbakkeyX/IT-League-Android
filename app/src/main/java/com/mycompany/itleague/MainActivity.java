@@ -33,11 +33,14 @@ import android.widget.ListView;
 
 import com.ikimuhendis.ldrawer.ActionBarDrawerToggle;
 import com.ikimuhendis.ldrawer.DrawerArrowDrawable;
+import com.mycompany.itleague.adapters.MenuDataAdapter;
 import com.mycompany.itleague.fragments.NewsFragment_;
 import com.mycompany.itleague.fragments.TableFragment_;
 import com.mycompany.itleague.fragments.ViolationsFragment_;
 
 import org.androidannotations.annotations.EActivity;
+
+import java.util.ArrayList;
 
 
 @EActivity
@@ -102,8 +105,12 @@ public class MainActivity extends FragmentActivity {
                 "Нарушения",
                 "Турнир"
         };
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1, android.R.id.text1, values);
+        ArrayList<String> menu = new ArrayList<String>();
+        menu.add("Расписание");
+        menu.add("Новости");
+        menu.add("Нарушения");
+        menu.add("Турнир");
+        MenuDataAdapter adapter = new MenuDataAdapter(this, menu);
         mDrawerList.setAdapter(adapter);
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

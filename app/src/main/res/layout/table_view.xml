@@ -1,107 +1,127 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal" android:layout_width="match_parent"
-              android:layout_height="match_parent" android:weightSum="1">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical" android:layout_width="match_parent"
+              android:layout_height="match_parent">
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent" android:id="@+id/mainTableData">
-    <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="20dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginRight="5dp"
-            android:text="0"
-            android:id="@+id/textPlace"/>
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" android:id="@+id/mainTableData">
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginRight="5dp"
+                android:text="0"
+                android:id="@+id/textPlace"/>
 
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="64dp"
                 android:id="@+id/verticalSeparator" android:focusable="true"
                 android:src="@drawable/tables_vertical_separator"/>
-    <TextView
-            android:layout_width="100dp"
-            android:layout_height="24dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop = "20dp"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="5dp"
-            android:text="Name"
-            android:id="@+id/textTeamName" android:height="40dp"
-            android:visibility="visible"/>
+        <TextView
+                android:layout_width="110dp"
+                android:layout_height="24dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="Name"
+                android:id="@+id/textTeamName" android:height="40dp"
+                android:visibility="visible"/>
 
-    <TextView
-            android:layout_width="23dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textGames"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop = "20dp"
-            android:layout_marginLeft="10dp"
-            android:text="G"/>
-
-
-    <TextView
-            android:layout_width="23dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textWins"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop = "20dp"
-            android:layout_marginLeft="5dp"
-            android:text="W"/>
-
-
-    <TextView
-            android:layout_width="23dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textDraws"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop = "20dp"
-            android:layout_marginLeft="5dp"
-            android:text="D"/>
-
-
-    <TextView
-            android:layout_width="23dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textLoses"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop = "20dp"
-            android:layout_marginLeft="5dp"
-            android:text="L"/>
-
-    <TextView
-            android:layout_width="50dp"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop = "20dp"
-            android:layout_marginLeft = "5dp"
-            android:text="Goal"
-            android:id="@+id/textGoals"/>
-
-    <TextView
-            android:layout_width="23dp"
-            android:layout_height="23dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textScores"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop = "20dp"
-            android:layout_marginLeft="10dp"
-            android:text="Sco"/>
-        <ImageView
-                android:layout_width="wrap_content"
+        <TextView
+                android:layout_width="20dp"
                 android:layout_height="wrap_content"
-                android:layout_below = "@+id/textScores"
-                android:id="@+id/imageSeparator"
-                android:src="@drawable/tables_separator"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textGames"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="5dp"
+                android:text="G"/>
+
+
+        <TextView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textWins"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="5dp"
+                android:text="W"/>
+
+
+        <TextView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textDraws"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="5dp"
+                android:text="D"/>
+
+
+        <TextView
+                android:layout_width="20dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textLoses"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="5dp"
+                android:text="L"/>
+
+        <TextView
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="10dp"
+                android:text="Goal"
+                android:id="@+id/textGoals" android:gravity="center"/>
+
+        <RelativeLayout android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center|top"
+                        android:layout_marginRight="3dp">
+
+            <ImageView
+                    android:id="@+id/imageCircle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/score_bg"
+                    />
+            <!--  android:layout_marginBottom="10dp"
+                                android:layout_marginTop = "12dp"
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:layout_marginLeft="3dp"-->
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:id="@+id/textScores"
+                    android:text="Sco"
+                    android:layout_centerInParent="true"
+                    android:gravity="center" android:textColor="#fff3f3da"/>
+        </RelativeLayout>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <ImageView
+                android:id="@+id/tableSeparator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/tables_separator"/>
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

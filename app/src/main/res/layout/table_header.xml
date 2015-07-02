@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent" >
 
     <TextView
             android:layout_width="153dp"
@@ -11,45 +11,46 @@
             android:text="Large Text"
             android:id="@+id/textHeaderTable" android:layout_gravity="center_horizontal"
             android:background="#ff90a49e" android:textColor="#fff2f2d6" android:textSize="15dp"
-            android:elegantTextHeight="false" android:paddingLeft="15dp" android:paddingTop="5dp"/>
+            android:elegantTextHeight="false" android:paddingLeft="15dp" android:paddingTop="5dp"
+            />
     <TextView
-            android:layout_width="28dp"
+            android:layout_width="25dp"
             android:layout_height="30dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textGames"
+            android:id="@+id/games"
             android:background="#ff90a49e" android:textColor="#fff2f2d6" android:textSize="15dp"
             android:paddingTop="5dp"
-            android:text="И"/>
-
-
-    <TextView
-            android:layout_width="28dp"
-            android:layout_height="30dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textWins"
-            android:background="#ff90a49e" android:textColor="#fff2f2d6" android:textSize="15dp"
-            android:paddingTop="5dp"
-            android:text="В"/>
+            android:text="И" android:gravity="center"/>
 
 
     <TextView
-            android:layout_width="28dp"
+            android:layout_width="25dp"
             android:layout_height="30dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textDraws"
+            android:id="@+id/wins"
             android:background="#ff90a49e" android:textColor="#fff2f2d6" android:textSize="15dp"
             android:paddingTop="5dp"
-            android:text="Н"/>
+            android:text="В" android:gravity="center"/>
 
 
     <TextView
-            android:layout_width="33dp"
+            android:layout_width="25dp"
             android:layout_height="30dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textLoses"
+            android:id="@+id/draws"
             android:background="#ff90a49e" android:textColor="#fff2f2d6" android:textSize="15dp"
             android:paddingTop="5dp"
-            android:text="П"/>
+            android:text="Н" android:gravity="center"/>
+
+
+    <TextView
+            android:layout_width="25dp"
+            android:layout_height="30dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/loses"
+            android:background="#ff90a49e" android:textColor="#fff2f2d6" android:textSize="15dp"
+            android:paddingTop="5dp"
+            android:text="П" android:gravity="center"/>
 
     <TextView
             android:layout_width="55dp"
@@ -58,14 +59,14 @@
             android:background="#ff90a49e" android:textColor="#fff2f2d6" android:textSize="15dp"
             android:paddingTop="5dp"
             android:text="+/-"
-            android:id="@+id/textGoals"/>
+            android:id="@+id/goals" android:gravity="center"/>
 
     <TextView
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textScores"
+            android:id="@+id/scores"
             android:background="#ff90a49e" android:textColor="#fff2f2d6" android:textSize="15dp"
             android:paddingTop="5dp"
-            android:text="О"/>
+            android:text="О" android:gravity="center"/>
 </LinearLayout>
