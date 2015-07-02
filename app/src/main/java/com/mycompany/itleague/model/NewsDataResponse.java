@@ -3,6 +3,7 @@ package com.mycompany.itleague.model;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,10 +16,10 @@ public class NewsDataResponse {
     private int newCount;
 
     @JsonProperty("news")
-    private List<NewsMainData> mainNewsData;
+    private ArrayList<NewsMainData> mainNewsData;
 
     public int getNewCount () { return this.newCount; }
 
-    public List<NewsMainData> getMainNewsData () { return this.mainNewsData; }
+    public ArrayList<NewsMainData> getMainNewsData () { return this.mainNewsData; }
 }
 

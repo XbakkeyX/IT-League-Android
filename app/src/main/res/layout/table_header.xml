@@ -1,13 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="153dp"
+            android:layout_height="30dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
-            android:id="@+id/textHeaderTable" android:layout_gravity="center_horizontal"/>
+            android:id="@+id/textHeaderTable" android:layout_gravity="center_horizontal"
+            android:background="#ff90a49e" android:textColor="#fff2f2d6" android:textSize="15dp"
+            android:elegantTextHeight="false" android:paddingLeft="15dp" android:paddingTop="5dp"/>
+    <TextView
+            android:layout_width="28dp"
+            android:layout_height="30dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textGames"
+            android:background="#ff90a49e" android:textColor="#fff2f2d6" android:textSize="15dp"
+            android:paddingTop="5dp"
+            android:text="И"/>
+
+
+    <TextView
+            android:layout_width="28dp"
+            android:layout_height="30dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textWins"
+            android:background="#ff90a49e" android:textColor="#fff2f2d6" android:textSize="15dp"
+            android:paddingTop="5dp"
+            android:text="В"/>
+
+
+    <TextView
+            android:layout_width="28dp"
+            android:layout_height="30dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textDraws"
+            android:background="#ff90a49e" android:textColor="#fff2f2d6" android:textSize="15dp"
+            android:paddingTop="5dp"
+            android:text="Н"/>
+
+
+    <TextView
+            android:layout_width="33dp"
+            android:layout_height="30dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textLoses"
+            android:background="#ff90a49e" android:textColor="#fff2f2d6" android:textSize="15dp"
+            android:paddingTop="5dp"
+            android:text="П"/>
+
+    <TextView
+            android:layout_width="55dp"
+            android:layout_height="30dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:background="#ff90a49e" android:textColor="#fff2f2d6" android:textSize="15dp"
+            android:paddingTop="5dp"
+            android:text="+/-"
+            android:id="@+id/textGoals"/>
+
+    <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:id="@+id/textScores"
+            android:background="#ff90a49e" android:textColor="#fff2f2d6" android:textSize="15dp"
+            android:paddingTop="5dp"
+            android:text="О"/>
 </LinearLayout>

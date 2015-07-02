@@ -23,7 +23,7 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
 
     private ArrayList<String> leagueName = new ArrayList<String>();
 
-    TableObject user;
+    private TableObject user;
 
     @Override
     public View getHeaderView(int position, View convertView, ViewGroup parent) {
@@ -33,7 +33,7 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
             holder = new HeaderViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.table_header, parent, false);
-            holder.leagueName = (TextView) convertView.findViewById(R.id.textHeaderTable);
+            holder.league = (TextView) convertView.findViewById(R.id.textHeaderTable);
             convertView.setTag(holder);
         } else {
             holder = (HeaderViewHolder) convertView.getTag();
@@ -44,7 +44,7 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
                 headerText = leagueName.get(i);
             }
         }
-        holder.leagueName.setText(headerText);
+        holder.league.setText(headerText);
         return convertView;
     }
 
@@ -64,12 +64,24 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
 
         private TextView teamName;
 
-        private TextView teamResults;
+        private TextView teamPlace;
+
+        private TextView teamGoals;
+
+        private TextView teamWins;
+
+        private TextView teamDraws;
+
+        private TextView teamLoses;
+
+        private TextView teamGames;
+
+        private TextView teamScores;
     }
 
     private static class HeaderViewHolder {
 
-        private TextView leagueName;
+        private TextView league;
     }
 
     public TableDataAdapter(Context context, ArrayList<TableObject> users) {
@@ -91,17 +103,27 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.table_view, parent, false);
+            viewHolder.teamPlace = (TextView) convertView.findViewById(R.id.textPlace);
             viewHolder.teamName = (TextView) convertView.findViewById(R.id.textTeamName);
-            viewHolder.teamResults = (TextView) convertView.findViewById(R.id.textTeamResults);
+            viewHolder.teamGames = (TextView) convertView.findViewById(R.id.textGames);
+            viewHolder.teamWins = (TextView) convertView.findViewById(R.id.textWins);
+            viewHolder.teamLoses = (TextView) convertView.findViewById(R.id.textLoses);
+            viewHolder.teamDraws = (TextView) convertView.findViewById(R.id.textDraws);
+            viewHolder.teamScores = (TextView) convertView.findViewById(R.id.textScores);
+            viewHolder.teamGoals = (TextView) convertView.findViewById(R.id.textGoals);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
+        viewHolder.teamPlace.setText(user.getTableMainDatas().getPosition());
         viewHolder.teamName.setText(user.getTableMainDatas().getTeam());
-        viewHolder.teamResults.setText(
-                user.getTableMainDatas().getGames() + " " + user.getTableMainDatas().getWins() + " " + user.getTableMainDatas().getDraws() + " " +
-                        user.getTableMainDatas().getLoses());
+        viewHolder.teamGames.setText(user.getTableMainDatas().getGames());
+        viewHolder.teamWins.setText(user.getTableMainDatas().getWins());
+        viewHolder.teamLoses.setText(user.getTableMainDatas().getLoses());
+        viewHolder.teamDraws.setText(user.getTableMainDatas().getDraws());
+        viewHolder.teamScores.setText(user.getTableMainDatas().getScores());
+        viewHolder.teamGoals.setText(user.getTableMainDatas().getGoalsFor() + "/" + user.getTableMainDatas().getGoalsAgainst());
+
         return convertView;
     }
 }

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mycompany.itleague.R;
@@ -43,14 +44,13 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> impl
         } else {
             holder = (HeaderViewHolder) convertView.getTag();
         }
-        String headerText = "";
-
+        String headerText = new String();
         for (int i = 0; i < tours.size(); i++) {
-            if (user.getTourName() == tours.get(i)) {
+            if ((user.getTourName().equals(tours.get(i)))) {
                 headerText = tours.get(i);
-                holder.tour.setText(headerText);
             }
         }
+        holder.tour.setText(headerText);
         return convertView;
     }
 
@@ -70,6 +70,7 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> impl
     private static class ViewHolder {
 
         private TextView name;
+        private ImageView card;
     }
 
     private static class HeaderViewHolder {
@@ -98,16 +99,24 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> impl
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.violations_view, parent, false);
             viewHolder.name = (TextView) convertView.findViewById(R.id.textViolationsView);
+            viewHolder.card = (ImageView) convertView.findViewById(R.id.imageCard);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         String teamName = user.getTeamName();
+        if((user.getStatsName().equals("yellow_card"))) {
+            viewHolder.card.setImageResource(R.drawable.yellowcard);
+        }
+        else if((user.getStatsName().equals("red_card"))) {
+            viewHolder.card.setImageResource(R.drawable.redcard);
+        }
         Spannable wordtoSpan = new SpannableString(teamName);
-        wordtoSpan.setSpan(new ForegroundColorSpan(Color.BLUE), 0, teamName.length(),
+        wordtoSpan.setSpan(new ForegroundColorSpan(Color.GREEN), 0, teamName.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
         viewHolder.name.setText(
-                user.getFirstName() + " " + user.getLastName() + " ( " + teamName + ") ");
+                user.getLastName() + " " + user.getFirstName() + " (" + teamName + ") ");
 
         return convertView;
     }

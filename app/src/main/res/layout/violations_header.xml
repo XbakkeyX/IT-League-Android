@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              android:orientation="horizontal"
               android:layout_width="match_parent"
               android:layout_height="match_parent">
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
-            android:id="@+id/textHeaderViolations" android:layout_gravity="center_horizontal"/>
+            android:id="@+id/textHeaderViolations" android:layout_gravity="center_horizontal"
+            android:background="#ff90a49e" android:textColor="#fff2f2d6" android:textSize="15dp"
+            android:elegantTextHeight="false" android:paddingLeft="20dp" android:paddingTop="5dp"/>
+
 </LinearLayout>

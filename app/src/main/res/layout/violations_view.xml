@@ -1,12 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/textViolationsView" />
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="18dp"
+                android:id="@+id/imageCard"
+                android:visibility="visible"
+                android:layout_marginLeft="20dp" android:layout_marginTop="20dp"
+                android:focusableInTouchMode="false"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="65dp"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Medium Text"
+            android:id="@+id/textViolationsView" android:paddingLeft="20dp" android:paddingTop="20dp"
+            android:height="30dp" android:textSize="15dp"/>
+    </LinearLayout>
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageSeparator" android:focusable="true"
+                android:src="@drawable/fouls_separator"/>
+    </LinearLayout>
+
 </LinearLayout>
