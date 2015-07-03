@@ -4,7 +4,6 @@ import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Сергей on 22.06.2015.
@@ -13,13 +12,17 @@ import java.util.List;
 public class NewsDataResponse {
 
     @JsonProperty("news_count")
-    private int newCount;
+    private int newsCount;
 
     @JsonProperty("news")
     private ArrayList<NewsMainData> mainNewsData;
 
-    public int getNewCount () { return this.newCount; }
+    public int getNewsCount() {
+        return this.newsCount;
+    }
 
-    public ArrayList<NewsMainData> getMainNewsData () { return this.mainNewsData; }
+    public ArrayList<NewsMainData> getMainNewsData() {
+        return this.mainNewsData;
+    }
 }
 

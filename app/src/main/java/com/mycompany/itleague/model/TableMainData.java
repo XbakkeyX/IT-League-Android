@@ -42,47 +42,47 @@ public class TableMainData {
     @JsonProperty("scores")
     private String scores;
 
-    public String  getPosition () {
+    public String getPosition() {
         return this.position;
     }
 
-    public String  getPositionChange () {
+    public String getPositionChange() {
         return this.positionChange;
     }
 
-    public String  getTeam () {
+    public String getTeam() {
         return this.team;
     }
 
-    public String  getGames () {
+    public String getGames() {
         return this.games;
     }
 
-    public String  getWins () {
+    public String getWins() {
         return this.wins;
     }
 
-    public String  getDraws () {
+    public String getDraws() {
         return this.draws;
     }
 
-    public String  getLoses () {
+    public String getLoses() {
         return this.loses;
     }
 
-    public String  getGoalsFor () {
+    public String getGoalsFor() {
         return this.goalsFor;
     }
 
-    public String  getGoalsAgainst () {
+    public String getGoalsAgainst() {
         return this.goalsAgainst;
     }
 
-    public String  getGoalsDiff () {
+    public String getGoalsDiff() {
         return this.goalsDiff;
     }
 
-    public String  getScores () {
+    public String getScores() {
         return this.scores;
     }
 

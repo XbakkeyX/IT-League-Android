@@ -1,29 +1,22 @@
 
 package com.mycompany.itleague.fragments;
 
-import android.content.Context;
 import android.support.v4.app.Fragment;
-import android.widget.ArrayAdapter;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 
 import com.mycompany.itleague.R;
 import com.mycompany.itleague.adapters.ViolationsDataAdapter;
 import com.mycompany.itleague.manager.MainApiClientProvider;
-import com.mycompany.itleague.model.ViolationsConnectionData;
 import com.mycompany.itleague.model.ViolationsMainData;
 
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.Bean;
-import org.androidannotations.annotations.EActivity;
 import org.androidannotations.annotations.EFragment;
 import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
@@ -32,17 +25,10 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
  * Created by Сергей on 23.06.2015.
  */
 
-
 @EFragment(R.layout.violtations)
 public class ViolationsFragment extends Fragment {
 
     private ViolationsDataAdapter adapter;
-
-   // public ArrayList<String> tours = new ArrayList<String>();
-
-/*    public ArrayList<String> getTours() {
-        return tours;
-    }*/
 
     @Bean
     /*package*/
@@ -55,19 +41,15 @@ public class ViolationsFragment extends Fragment {
     @Background
     void updateViolations() {
 
-        ArrayList<ViolationsMainData> violationsMainDataArrayList = new ArrayList<ViolationsMainData>();
-        ArrayList<ArrayList<ViolationsMainData>> violationsArrayList =  apiViolationsClientProvider.getMainApiClient().getViolationInfo().getMainViolationsData();
+        ArrayList<ViolationsMainData> violationsMainDataArrayList
+                = new ArrayList<ViolationsMainData>();
+        ArrayList<ArrayList<ViolationsMainData>> violationsArrayList = apiViolationsClientProvider
+                .getMainApiClient().getViolationInfo().getMainViolationsData();
         for (int i = 0; i < violationsArrayList.size(); i++) {
-            for(int j = 0; j < violationsArrayList.get(i).size(); j++)
-            violationsMainDataArrayList.add(violationsArrayList.get(i).get(j));
-        }
-/*        String tmp = "";
-        for (int i = 0; i < violationsMainDataArrayList.size(); i++) {
-            if (tmp != violationsMainDataArrayList.get(i).getTeamName()) {
-                tmp = violationsMainDataArrayList.get(i).getTeamName();
+            for (int j = 0; j < violationsArrayList.get(i).size(); j++) {
+                violationsMainDataArrayList.add(violationsArrayList.get(i).get(j));
             }
-            tours.add(tmp);
-        }*/
+        }
         adapter = new ViolationsDataAdapter(getActivity(), violationsMainDataArrayList);
         this.setViolationInfo();
     }
@@ -78,7 +60,7 @@ public class ViolationsFragment extends Fragment {
     }
 
     @AfterViews
-    void VioltationsrDefault() {
+    void ViolationsDefault() {
         this.updateViolations();
     }
 

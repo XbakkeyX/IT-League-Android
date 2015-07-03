@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.mycompany.itleague.R;
 import com.mycompany.itleague.model.NewsMainData;
-import com.mycompany.itleague.model.TableMainData;
 
 import java.util.List;
 
@@ -19,8 +18,12 @@ import java.util.List;
 public class NewsDataAdapter extends ArrayAdapter<NewsMainData> {
 
     private static class ViewHolder {
+
         private TextView title;
+
         private TextView preview;
+
+        private TextView author;
     }
 
     public NewsDataAdapter(Context context, List<NewsMainData> users) {
@@ -37,11 +40,12 @@ public class NewsDataAdapter extends ArrayAdapter<NewsMainData> {
             convertView = inflater.inflate(R.layout.news_view, parent, false);
             viewHolder.title = (TextView) convertView.findViewById(R.id.textTitle);
             viewHolder.preview = (TextView) convertView.findViewById(R.id.textPreview);
+            viewHolder.author = (TextView) convertView.findViewById(R.id.textNameAuthor);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
+        viewHolder.author.setText(user.getAuthor());
         viewHolder.title.setText(user.getTitle());
         viewHolder.preview.setText(user.getSubtitle());
         return convertView;

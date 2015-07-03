@@ -9,6 +9,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ViolationsMainData {
+
     @JsonProperty("team_name")
     private String teamName;
 
@@ -24,11 +25,11 @@ public class ViolationsMainData {
     @JsonProperty("tour_name")
     private String tourName;
 
-    public String  getTeamName () {
-    return this.teamName;
+    public String getTeamName() {
+        return this.teamName;
     }
 
-    public String  getFirstName () {
+    public String getFirstName() {
         return this.firstName;
     }
 
@@ -36,11 +37,11 @@ public class ViolationsMainData {
         return this.lastName;
     }
 
-    public String  getStatsName () {
+    public String getStatsName() {
         return this.statsName;
     }
 
-    public String  getTourName () {
+    public String getTourName() {
         return this.tourName;
     }
 }

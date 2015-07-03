@@ -8,5 +8,7 @@ import java.util.List;
  */
 public class TableLeaguesResponse extends ArrayList<TableLeaguesData> {
 
-    public ArrayList<TableLeaguesData> getTableLeaguesData() { return this; }
+    public ArrayList<TableLeaguesData> getTableLeaguesData() {
+        return this;
+    }
 }

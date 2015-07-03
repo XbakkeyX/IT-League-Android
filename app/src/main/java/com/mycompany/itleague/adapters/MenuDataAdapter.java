@@ -1,7 +1,6 @@
 package com.mycompany.itleague.adapters;
 
 import com.mycompany.itleague.R;
-import com.mycompany.itleague.model.NewsMainData;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Сергей on 02.07.2015.

@@ -1,34 +1,15 @@
 package com.mycompany.itleague;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.res.Configuration;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-
-
-import android.app.ActionBar;
-import android.app.Activity;
-import android.content.Intent;
-import android.content.res.Configuration;
-import android.net.Uri;
-import android.os.Bundle;
-import android.support.v4.widget.DrawerLayout;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.ikimuhendis.ldrawer.ActionBarDrawerToggle;
@@ -38,50 +19,47 @@ import com.mycompany.itleague.fragments.NewsFragment_;
 import com.mycompany.itleague.fragments.TableFragment_;
 import com.mycompany.itleague.fragments.ViolationsFragment_;
 
+import org.androidannotations.annotations.AfterViews;
+import org.androidannotations.annotations.Background;
 import org.androidannotations.annotations.EActivity;
+import org.androidannotations.annotations.UiThread;
+import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
 
 
-@EActivity
+@EActivity(R.layout.activity_main)
 public class MainActivity extends FragmentActivity {
 
-    private DrawerLayout mDrawerLayout;
+    @ViewById(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
 
-    private ListView mDrawerList;
+    @ViewById(R.id.navdrawer)
+    ListView mDrawerList;
 
     private ActionBarDrawerToggle mDrawerToggle;
 
     private DrawerArrowDrawable drawerArrow;
 
-    private boolean drawerArrowColor;
+    private MenuDataAdapter adapter;
 
-    ViolationsFragment_ fragmentViolations = new ViolationsFragment_();
+    private ViolationsFragment_ fragmentViolations = new ViolationsFragment_();
 
-    NewsFragment_ fragmentNews = new NewsFragment_();
+    private NewsFragment_ fragmentNews = new NewsFragment_();
 
-    TableFragment_ fragmentTable = new TableFragment_();
+    private TableFragment_ fragmentTable = new TableFragment_();
 
-    FragmentManager fragmentManager = getSupportFragmentManager();
+    private FragmentManager fragmentManager = getSupportFragmentManager();
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        ActionBar ab = getActionBar();
-        ab.setDisplayHomeAsUpEnabled(true);
-        ab.setHomeButtonEnabled(true);
-        Context sContext = getApplicationContext();
-
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.navdrawer);
-
+    @AfterViews
+    void MenuDefault() {
         drawerArrow = new DrawerArrowDrawable(this) {
             @Override
             public boolean isLayoutRtl() {
                 return false;
             }
         };
+
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
                 drawerArrow, R.string.drawer_open,
                 R.string.drawer_close) {
@@ -98,19 +76,30 @@ public class MainActivity extends FragmentActivity {
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
+        this.updateMenu();
+    }
 
-        String[] values = new String[]{
-                "Расписание",
-                "Новости",
-                "Нарушения",
-                "Турнир"
-        };
+
+    @Background
+    void updateMenu() {
+        ActionBar ab = getActionBar();
+        ab.setDisplayHomeAsUpEnabled(true);
+        ab.setHomeButtonEnabled(true);
+        Context sContext = getApplicationContext();
+
         ArrayList<String> menu = new ArrayList<String>();
         menu.add("Расписание");
         menu.add("Новости");
         menu.add("Нарушения");
         menu.add("Турнир");
-        MenuDataAdapter adapter = new MenuDataAdapter(this, menu);
+        adapter = new MenuDataAdapter(this, menu);
+        this.setMenuInfo();
+    }
+
+
+    @UiThread
+    void setMenuInfo() {
+
         mDrawerList.setAdapter(adapter);
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -122,22 +111,30 @@ public class MainActivity extends FragmentActivity {
                         drawerArrow.setProgress(1f);
                         break;
                     case 1:
+
                         fragmentManager.beginTransaction()
                                 .replace(R.id.fragmentContainer, fragmentNews)
                                 .addToBackStack(null)
                                 .commitAllowingStateLoss();
+                        mDrawerLayout.closeDrawer(mDrawerList);
+
                         break;
                     case 2:
+                        mDrawerToggle.syncState();
                         fragmentManager.beginTransaction()
                                 .replace(R.id.fragmentContainer, fragmentViolations)
                                 .addToBackStack(null)
                                 .commitAllowingStateLoss();
+                        mDrawerLayout.closeDrawer(mDrawerList);
+                        mDrawerToggle.syncState();
                         break;
                     case 3:
                         fragmentManager.beginTransaction()
                                 .replace(R.id.fragmentContainer, fragmentTable)
                                 .addToBackStack(null)
                                 .commitAllowingStateLoss();
+                        mDrawerLayout.closeDrawer(mDrawerList);
+                        mDrawerToggle.syncState();
                         break;
                 }
 

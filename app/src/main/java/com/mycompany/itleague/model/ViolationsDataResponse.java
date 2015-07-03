@@ -17,8 +17,7 @@ public class ViolationsDataResponse {
     @JsonProperty("violations")
     private ArrayList<ArrayList<ViolationsMainData>> violations;
 
-    public ArrayList<ArrayList<ViolationsMainData>> getMainViolationsData()
-    {
+    public ArrayList<ArrayList<ViolationsMainData>> getMainViolationsData() {
         return violations;
     }
 }

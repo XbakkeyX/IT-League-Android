@@ -96,8 +96,8 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
     public TableDataAdapter(Context context, ArrayList<TableObject> users) {
         super(context, R.layout.table_view, users);
         String league = "";
-        for(int i = 0; i< users.size(); i++){
-            if(league!= users.get(i).getLeagueName()){
+        for (int i = 0; i < users.size(); i++) {
+            if (league != users.get(i).getLeagueName()) {
                 league = users.get(i).getLeagueName();
                 leagueName.add(league);
             }
@@ -134,9 +134,11 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
         String first = user.getTableMainDatas().getGoalsFor();
         String next = user.getTableMainDatas().getGoalsAgainst();
         viewHolder.teamGoals.setText(first + "/" + next, TextView.BufferType.SPANNABLE);
-        Spannable s = (Spannable)viewHolder.teamGoals.getText();
-        s.setSpan(new ForegroundColorSpan(0xFFFF0000),  first.length()+1,  first.length()+1 + next.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-        s.setSpan(new ForegroundColorSpan(0xFF00AF5A), 0, first.length(),Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        Spannable s = (Spannable) viewHolder.teamGoals.getText();
+        s.setSpan(new ForegroundColorSpan(0xFFFF0000), first.length() + 1,
+                first.length() + 1 + next.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        s.setSpan(new ForegroundColorSpan(0xFF00AF5A), 0, first.length(),
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         return convertView;
     }
 }

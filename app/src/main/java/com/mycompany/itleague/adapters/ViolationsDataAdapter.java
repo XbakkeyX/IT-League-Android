@@ -29,7 +29,7 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> impl
 
     public ArrayList<String> tours = new ArrayList<String>();
 
-    ViolationsMainData user;
+    private ViolationsMainData user;
 
     @Override
     public View getHeaderView(int position, View convertView, ViewGroup parent) {
@@ -70,6 +70,7 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> impl
     private static class ViewHolder {
 
         private TextView name;
+
         private ImageView card;
     }
 
@@ -81,11 +82,12 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> impl
     public ViolationsDataAdapter(Context context, ArrayList<ViolationsMainData> users) {
         super(context, R.layout.violations_view, users);
         String tour = "";
-        for(int i = 0; i< users.size(); i++)
-            if(!(tour.equals(users.get(i).getTourName()))) {
+        for (int i = 0; i < users.size(); i++) {
+            if (!(tour.equals(users.get(i).getTourName()))) {
                 tour = users.get(i).getTourName();
                 tours.add(tour);
             }
+        }
 
 
     }
@@ -105,10 +107,9 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> impl
             viewHolder = (ViewHolder) convertView.getTag();
         }
         String teamName = user.getTeamName();
-        if((user.getStatsName().equals("yellow_card"))) {
+        if ((user.getStatsName().equals("yellow_card"))) {
             viewHolder.card.setImageResource(R.drawable.yellowcard);
-        }
-        else if((user.getStatsName().equals("red_card"))) {
+        } else if ((user.getStatsName().equals("red_card"))) {
             viewHolder.card.setImageResource(R.drawable.redcard);
         }
         Spannable wordtoSpan = new SpannableString(teamName);

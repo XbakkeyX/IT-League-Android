@@ -7,6 +7,8 @@ import java.util.ArrayList;
  */
 public class ViolationsConnectionData extends ArrayList<ViolationsMainData> {
 
-    public ArrayList<ViolationsMainData> getViolationsMainData() { return this; }
+    public ArrayList<ViolationsMainData> getViolationsMainData() {
+        return this;
+    }
 
 }

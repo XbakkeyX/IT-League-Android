@@ -18,7 +18,11 @@ public class TableLeaguesData {
     @JsonProperty("stage")
     private String stage;
 
-    public List<TableRowsData> getLeagues () { return this.leagues; }
+    public List<TableRowsData> getLeagues() {
+        return this.leagues;
+    }
 
-    public String getStage (){ return this.stage; }
+    public String getStage() {
+        return this.stage;
+    }
 }

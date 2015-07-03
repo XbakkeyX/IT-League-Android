@@ -8,6 +8,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class NewsMainData {
+
     @JsonProperty("id")
     private long id;
 
@@ -23,7 +24,7 @@ public class NewsMainData {
     @JsonProperty("subtitle")
     private String subtitle;
 
-    @JsonProperty ("author")
+    @JsonProperty("author")
     private String author;
 
     @JsonProperty("comments_count")
@@ -33,19 +34,35 @@ public class NewsMainData {
     private String body;
 
 
-    public long getId() {return this.id;}
+    public long getId() {
+        return this.id;
+    }
 
-    public String getCreatedAt() { return this.createdAt; }
+    public String getCreatedAt() {
+        return this.createdAt;
+    }
 
-    public String getUpdatedAt() { return this.updatedAt; }
+    public String getUpdatedAt() {
+        return this.updatedAt;
+    }
 
-    public String getTitle() { return this.title; }
+    public String getTitle() {
+        return this.title;
+    }
 
-    public String getSubtitle() { return this.subtitle; }
+    public String getSubtitle() {
+        return this.subtitle;
+    }
 
-    public String getAuthor() { return this.author; }
+    public String getAuthor() {
+        return this.author;
+    }
 
-    public long getCommentsCount () { return this.commentsCount; }
+    public long getCommentsCount() {
+        return this.commentsCount;
+    }
 
-    public String getBody() { return  this.body; }
+    public String getBody() {
+        return this.body;
+    }
 }

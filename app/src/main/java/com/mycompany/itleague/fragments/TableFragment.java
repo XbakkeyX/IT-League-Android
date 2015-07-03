@@ -8,7 +8,6 @@ import com.mycompany.itleague.adapters.TableDataAdapter;
 import com.mycompany.itleague.manager.MainApiClientProvider;
 import com.mycompany.itleague.model.TableLeaguesData;
 import com.mycompany.itleague.model.TableLeaguesResponse;
-import com.mycompany.itleague.model.TableMainData;
 import com.mycompany.itleague.model.TableRowsData;
 
 import org.androidannotations.annotations.AfterViews;
@@ -37,7 +36,6 @@ public class TableFragment extends Fragment {
     public ArrayList<TableRowsData> getTableRows() {
         return this.tableRowsDataArrayList;
     }
-
 
     @Bean
     /*package*/

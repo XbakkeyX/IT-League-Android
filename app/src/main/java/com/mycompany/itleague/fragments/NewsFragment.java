@@ -27,43 +27,46 @@ import java.util.ArrayList;
 public class NewsFragment extends Fragment {
 
     private NewsDataAdapter adapter;
+
     private int pageNumber = 0;
+
     private int newsPerPage = 15;
-    boolean loadingMore = false;
+
+    boolean loadingMore = true;
+
+    private int newsCount = 0;
+
+    private int amountOfAllNews;
 
     ArrayList<NewsMainData> downloadedNews = new ArrayList<NewsMainData>();
 
     @Bean
     /*package*/
-    MainApiClientProvider apiNewsClientProvider;
+            MainApiClientProvider apiNewsClientProvider;
 
     @ViewById
     /*package*/
-    ListView listNewsView;
-/*
+            ListView listNewsView;
+
     private Runnable loadMoreListItems = new Runnable() {
         @Override
         public void run() {
-            //Set flag so we cant load new items 2 at the same time
             loadingMore = true;
-            pageNumber++;
-            //Reset the array that holds the new items
-
-            //Simulate a delay, delete this on a production environment!
-            try { Thread.sleep(1000);
-            } catch (InterruptedException e) {}
-
-            downloadedNews = apiNewsClientProvider.getMainApiClient().getListNews(pageNumber,newsPerPage).getMainNewsData();
+            downloadedNews.addAll(apiNewsClientProvider.getMainApiClient()
+                    .getListNews(pageNumber, newsPerPage).getMainNewsData());
             //Done! now continue on the UI thread
-            adapter = new NewsDataAdapter(getActivity(),downloadedNews);
+            adapter = new NewsDataAdapter(getActivity(), downloadedNews);
             setNewsInfo();
         }
-    };*/
+    };
 
     @Background
     void updateNews() {
         pageNumber = 1;
-        downloadedNews = this.apiNewsClientProvider.getMainApiClient().getListNews(pageNumber,newsPerPage).getMainNewsData();
+        downloadedNews = this.apiNewsClientProvider.getMainApiClient()
+                .getListNews(pageNumber, newsPerPage).getMainNewsData();
+        amountOfAllNews = this.apiNewsClientProvider.getMainApiClient()
+                .getListNews(pageNumber, newsPerPage).getNewsCount();
         adapter = new NewsDataAdapter(getActivity(), downloadedNews);
         LayoutInflater inflater = LayoutInflater.from(getActivity());
         View footerView = inflater.inflate(R.layout.news_footer, null, false);
@@ -77,37 +80,33 @@ public class NewsFragment extends Fragment {
             public void onScroll(AbsListView view, int firstVisibleItem,
                     int visibleItemCount, int totalItemCount) {
 
-                if(firstVisibleItem+visibleItemCount == totalItemCount && totalItemCount!=0)
-                {
-                    if(!loadingMore)
-                    {
-                        loadingMore = true;
-                        addNewItems();
+                int lastInScreen = firstVisibleItem + visibleItemCount;
+                //is the bottom item visible & not loading more already ? Load more !
+                if ((lastInScreen == totalItemCount) && !(loadingMore)) {
+                    if (amountOfAllNews != newsCount) {
+                        Thread thread = new Thread(null, loadMoreListItems);
+                        pageNumber++;
+                        thread.start();
                     }
                 }
             }
-        });
 
+        });
         this.setNewsInfo();
     }
 
-    private void addNewItems() {
-        loadingMore = false;
-        pageNumber++;
-
-        try { Thread.sleep(1000);
-        } catch (InterruptedException e) {}
-        downloadedNews.addAll(apiNewsClientProvider.getMainApiClient().getListNews(pageNumber,newsPerPage).getMainNewsData());
-        //Done! now continue on the UI thread
-        adapter = new NewsDataAdapter(getActivity(),downloadedNews);
-        adapter.notifyDataSetChanged();
-        setNewsInfo();
-    }
-
-
     @UiThread
     void setNewsInfo() {
+        loadingMore = false;
         listNewsView.setAdapter(adapter);
+        listNewsView.post(new Runnable() {
+            @Override
+            public void run() {
+                int sizeOfNews = downloadedNews.size();
+                listNewsView.setSelection(sizeOfNews - 15);
+            }
+        });
+        newsCount += newsPerPage;
     }
 
     @AfterViews

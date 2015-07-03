@@ -21,5 +21,7 @@ public class TableRowsData {
         return this.tableMainData;
     }
 
-    public String getLeagueName () { return this.leagueName; }
+    public String getLeagueName() {
+        return this.leagueName;
+    }
 }
