@@ -1,9 +1,17 @@
 package com.mycompany.itleague.fragments;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.support.v4.app.Fragment;
 
+import com.activeandroid.ActiveAndroid;
+import com.activeandroid.query.Select;
 import com.mycompany.itleague.R;
-import com.mycompany.itleague.adapters.TableObject;
+import com.mycompany.itleague.database.NewsTable;
+import com.mycompany.itleague.database.TeamsTable;
+import com.mycompany.itleague.internet.InternetConnection;
+import com.mycompany.itleague.model.TableObject;
 import com.mycompany.itleague.adapters.TableDataAdapter;
 import com.mycompany.itleague.manager.MainApiClientProvider;
 import com.mycompany.itleague.model.TableLeaguesData;
@@ -18,6 +26,7 @@ import org.androidannotations.annotations.UiThread;
 import org.androidannotations.annotations.ViewById;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import se.emilsjolander.stickylistheaders.StickyListHeadersListView;
 
@@ -37,6 +46,15 @@ public class TableFragment extends Fragment {
         return this.tableRowsDataArrayList;
     }
 
+
+
+    public boolean isNetworkAvailable() {
+        ConnectivityManager connectivityManager
+                = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+        return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
+    }
+
     @Bean
     /*package*/
             MainApiClientProvider apiTableClientProvider;
@@ -49,19 +67,45 @@ public class TableFragment extends Fragment {
     void updateTable() {
         TableLeaguesResponse tableLeaguesResponse = this.apiTableClientProvider.getMainApiClient()
                 .getTableData();
-        for (TableLeaguesData tableLeaguesData : tableLeaguesResponse) {
-            tableRowsDataArrayList.addAll(tableLeaguesData.getLeagues());
-        }
-
-        for (int i = 0; i < tableRowsDataArrayList.size(); i++) {
-            for (int j = 0; j < tableRowsDataArrayList.get(i).getRowList().size(); j++) {
-                TableObject tableObject = new TableObject();
-                tableObject.setLeagueName(tableRowsDataArrayList.get(i).getLeagueName());
-                tableObject.setTableMainDatas(tableRowsDataArrayList.get(i).getRowList().get(j));
-                tableObjects.add(tableObject);
+        if(!(isNetworkAvailable())) {
+            Select select = new Select();
+            List<TeamsTable> teams = select.all().from(TeamsTable.class).execute();
+            for (int i = 0; i < teams.size(); i++) {
+                TableObject team = new TableObject();
+                team.setLeagueName(teams.get(i).leagueName);
+                team.setTableMainDatas(teams.get(i).teamMainData);
+                tableObjects.add(team);
             }
         }
+        else {
 
+            for (TableLeaguesData tableLeaguesData : tableLeaguesResponse) {
+                tableRowsDataArrayList.addAll(tableLeaguesData.getLeagues());
+            }
+
+            for (int i = 0; i < tableRowsDataArrayList.size(); i++) {
+                for (int j = 0; j < tableRowsDataArrayList.get(i).getRowList().size(); j++) {
+                    TableObject tableObject = new TableObject();
+                    tableObject.setLeagueName(tableRowsDataArrayList.get(i).getLeagueName());
+                    tableObject
+                            .setTableMainDatas(tableRowsDataArrayList.get(i).getRowList().get(j));
+                    tableObjects.add(tableObject);
+                }
+            }
+            ActiveAndroid.beginTransaction();
+            try {
+                for (int i = 0; i < tableObjects.size(); i++) {
+                    TeamsTable db = new TeamsTable();
+                    db.leagueName = tableObjects.get(i).getLeagueName();
+                    db.teamMainData = tableObjects.get(i).getTableMainDatas();
+                    db.save();
+                }
+                ActiveAndroid.setTransactionSuccessful();
+            } finally {
+                ActiveAndroid.endTransaction();
+            }
+
+        }
         adapter = new TableDataAdapter(getActivity(), tableObjects);
         this.setTableInfo();
     }

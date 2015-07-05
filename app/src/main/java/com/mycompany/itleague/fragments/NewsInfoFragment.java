@@ -1,7 +1,11 @@
 package com.mycompany.itleague.fragments;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,41 +24,48 @@ import org.androidannotations.annotations.ViewById;
 /**
  * Created by Сергей on 26.06.2015.
  */
-@EFragment(R.layout.news_info)
+@EFragment
 public class NewsInfoFragment extends Fragment {
+
+
+
 
     @Bean
     /*package*/
             MainApiClientProvider apiNewsClientProvider;
 
-   private NewsMainData newsInfo = new NewsMainData();
+    private NewsMainData newsInfo = new NewsMainData();
+
+    private long idOfNews = 0;
+
+    StringBuilder sb;
+
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+        idOfNews = getArguments().getLong("message");
+        return inflater.inflate(R.layout.news_info, container, false);
+    }
 
     @ViewById
     /*package*/
-            TextView textNewsInfo;
-
-    @ViewById
-    /*package*/
-            ListView listNewsView;
+            WebView webViewNewsInfo;
 
     @Background
     void updateNews() {
-        listNewsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View v, int position,
-                    long arg3) {
-                NewsMainData value = (NewsMainData) adapter.getItemAtPosition(position);
-                newsInfo = apiNewsClientProvider.getMainApiClient().getNewsInfo(value.getId());
-            }
-        });
+        sb = new StringBuilder();
+        sb.append(
+                "<HTML><HEAD><LINK href=\"styles.css\" type=\"text/css\" rel=\"stylesheet\"/> </HEAD><body><div style=\"margin:10p; padding-bottom:15px\">");
+        sb.append(apiNewsClientProvider.getMainApiClient().getNewsInfo(idOfNews).getBody());
+        sb.append("</div></body></HTML>");
         this.setNewsInfo();
     }
 
-
     @UiThread
     void setNewsInfo() {
-        //Here must be the code which setting the news info in the WebView depending on which id we
-        //got into the ClickListener method
+        webViewNewsInfo.loadDataWithBaseURL("file:///android_asset/", sb.toString(), "text/html",
+                "utf-8", null);
     }
 
     @AfterViews

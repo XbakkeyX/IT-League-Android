@@ -1,0 +1,59 @@
+package com.mycompany.itleague.database;
+
+/**
+ * Created by Сергей on 04.07.2015.
+ */
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
+//Notice how we specified the name of the table below
+@Table(name = "NewsTable")
+public class NewsTable extends Model {
+
+    // Notice how we specified the name of our column here
+    @Column(name = "newsId")
+    public long newsId;
+
+    // Notice how we specified the name of our column here
+    @Column(name = "createdAt")
+    public String newsCreatedAt;
+
+    @Column(name = "updatedAt")
+    public String newsUpdatedAt;
+
+    @Column(name = "title")
+    public String newsTitle;
+
+    @Column(name = "subtitle")
+    public String newsSubtitle;
+
+    @Column(name = "author")
+    public String newsAuthor;
+
+    @Column(name = "comments_count")
+    public long newsCommentsCount;
+
+    @Column(name = "body")
+    public String newsBody;
+
+
+    public NewsTable() {
+        // Notice how super() has been called to perform default initialization
+        // of our Model subclass
+        super();
+    }
+
+    public NewsTable(long newsId, String newsCreatedAt, String newsUpdatedAt, String newsTitle, String newsSubtitle,
+            String newsAuthor, long newsCommentsCount, String newsBody) {
+        super();
+        this.newsId = newsId;
+        this.newsCreatedAt = newsCreatedAt;
+        this.newsUpdatedAt = newsUpdatedAt;
+        this.newsTitle = newsTitle;
+        this.newsSubtitle = newsSubtitle;
+        this.newsAuthor = newsAuthor;
+        this.newsCommentsCount = newsCommentsCount;
+        this.newsBody = newsBody;
+    }
+}

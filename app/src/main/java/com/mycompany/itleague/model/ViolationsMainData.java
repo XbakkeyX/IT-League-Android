@@ -44,4 +44,27 @@ public class ViolationsMainData {
     public String getTourName() {
         return this.tourName;
     }
+
+    public void setTeamName(String teamName) {
+        this.teamName = teamName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setStatsName(String statsName) {
+        this.statsName = statsName;
+    }
+
+    public void setTourName(String tourName) {
+        this.tourName = tourName;
+    }
+
+
+
 }

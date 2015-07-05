@@ -11,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.mycompany.itleague.R;
+import com.mycompany.itleague.model.TableObject;
 
 import java.util.ArrayList;
 
@@ -36,8 +37,8 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
             holder = new HeaderViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.table_header, parent, false);
-            holder.league = (TextView) convertView.findViewById(R.id.textHeaderTable);
-            holder.goals = (TextView) convertView.findViewById(R.id.goals);
+            holder.leagueTextView = (TextView) convertView.findViewById(R.id.textHeaderTable);
+            holder.goalsTextView = (TextView) convertView.findViewById(R.id.goals);
             convertView.setTag(holder);
         } else {
             holder = (HeaderViewHolder) convertView.getTag();
@@ -50,8 +51,8 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
         }
         String first = "<font color='#00A42E'>+</font>" + "/";
         String next = "<font color='#EE0000'>-</font>";
-        holder.goals.setText(Html.fromHtml(first + next));
-        holder.league.setText(headerText);
+        holder.goalsTextView.setText(Html.fromHtml(first + next));
+        holder.leagueTextView.setText(headerText);
         return convertView;
     }
 
@@ -69,28 +70,28 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
 
     private static class ViewHolder {
 
-        private TextView teamName;
+        private TextView teamNameTextView;
 
-        private TextView teamPlace;
+        private TextView teamPlaceTextView;
 
-        private TextView teamGoals;
+        private TextView teamGoalsTextView;
 
-        private TextView teamWins;
+        private TextView teamWinsTextView;
 
-        private TextView teamDraws;
+        private TextView teamDrawsTextView;
 
-        private TextView teamLoses;
+        private TextView teamLosesTextView;
 
-        private TextView teamGames;
+        private TextView teamGamesTextView;
 
-        private TextView teamScores;
+        private TextView teamScoresTextView;
     }
 
     private static class HeaderViewHolder {
 
-        private TextView league;
+        private TextView leagueTextView;
 
-        private TextView goals;
+        private TextView goalsTextView;
     }
 
     public TableDataAdapter(Context context, ArrayList<TableObject> users) {
@@ -112,29 +113,29 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.table_view, parent, false);
-            viewHolder.teamPlace = (TextView) convertView.findViewById(R.id.textPlace);
-            viewHolder.teamName = (TextView) convertView.findViewById(R.id.textTeamName);
-            viewHolder.teamGames = (TextView) convertView.findViewById(R.id.textGames);
-            viewHolder.teamWins = (TextView) convertView.findViewById(R.id.textWins);
-            viewHolder.teamLoses = (TextView) convertView.findViewById(R.id.textLoses);
-            viewHolder.teamDraws = (TextView) convertView.findViewById(R.id.textDraws);
-            viewHolder.teamScores = (TextView) convertView.findViewById(R.id.textScores);
-            viewHolder.teamGoals = (TextView) convertView.findViewById(R.id.textGoals);
+            viewHolder.teamPlaceTextView = (TextView) convertView.findViewById(R.id.textPlace);
+            viewHolder.teamNameTextView = (TextView) convertView.findViewById(R.id.textTeamName);
+            viewHolder.teamGamesTextView = (TextView) convertView.findViewById(R.id.textGames);
+            viewHolder.teamWinsTextView = (TextView) convertView.findViewById(R.id.textWins);
+            viewHolder.teamLosesTextView = (TextView) convertView.findViewById(R.id.textLoses);
+            viewHolder.teamDrawsTextView = (TextView) convertView.findViewById(R.id.textDraws);
+            viewHolder.teamScoresTextView = (TextView) convertView.findViewById(R.id.textScores);
+            viewHolder.teamGoalsTextView = (TextView) convertView.findViewById(R.id.textGoals);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.teamPlace.setText(user.getTableMainDatas().getPosition());
-        viewHolder.teamName.setText(user.getTableMainDatas().getTeam());
-        viewHolder.teamGames.setText(user.getTableMainDatas().getGames());
-        viewHolder.teamWins.setText(user.getTableMainDatas().getWins());
-        viewHolder.teamLoses.setText(user.getTableMainDatas().getLoses());
-        viewHolder.teamDraws.setText(user.getTableMainDatas().getDraws());
-        viewHolder.teamScores.setText(user.getTableMainDatas().getScores());
+        viewHolder.teamPlaceTextView.setText(user.getTableMainDatas().getPosition());
+        viewHolder.teamNameTextView.setText(user.getTableMainDatas().getTeam());
+        viewHolder.teamGamesTextView.setText(user.getTableMainDatas().getGames());
+        viewHolder.teamWinsTextView.setText(user.getTableMainDatas().getWins());
+        viewHolder.teamLosesTextView.setText(user.getTableMainDatas().getLoses());
+        viewHolder.teamDrawsTextView.setText(user.getTableMainDatas().getDraws());
+        viewHolder.teamScoresTextView.setText(user.getTableMainDatas().getScores());
         String first = user.getTableMainDatas().getGoalsFor();
         String next = user.getTableMainDatas().getGoalsAgainst();
-        viewHolder.teamGoals.setText(first + "/" + next, TextView.BufferType.SPANNABLE);
-        Spannable s = (Spannable) viewHolder.teamGoals.getText();
+        viewHolder.teamGoalsTextView.setText(first + "/" + next, TextView.BufferType.SPANNABLE);
+        Spannable s = (Spannable) viewHolder.teamGoalsTextView.getText();
         s.setSpan(new ForegroundColorSpan(0xFFFF0000), first.length() + 1,
                 first.length() + 1 + next.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         s.setSpan(new ForegroundColorSpan(0xFF00AF5A), 0, first.length(),

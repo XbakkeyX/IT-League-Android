@@ -112,6 +112,7 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> impl
         } else if ((user.getStatsName().equals("red_card"))) {
             viewHolder.card.setImageResource(R.drawable.redcard);
         }
+
         Spannable wordtoSpan = new SpannableString(teamName);
         wordtoSpan.setSpan(new ForegroundColorSpan(Color.GREEN), 0, teamName.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);

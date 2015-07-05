@@ -19,9 +19,9 @@ public class MenuDataAdapter extends ArrayAdapter<String> {
 
     private static class ViewHolder {
 
-        private ImageView image;
+        private ImageView iconImageView;
 
-        private TextView menu;
+        private TextView menuTextView;
     }
 
     public MenuDataAdapter(Context context, ArrayList<String> users) {
@@ -36,27 +36,27 @@ public class MenuDataAdapter extends ArrayAdapter<String> {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.menu_view, parent, false);
-            viewHolder.image = (ImageView) convertView.findViewById(R.id.imageMenu);
-            viewHolder.menu = (TextView) convertView.findViewById(R.id.textMenu);
+            viewHolder.iconImageView = (ImageView) convertView.findViewById(R.id.imageMenu);
+            viewHolder.menuTextView = (TextView) convertView.findViewById(R.id.textMenu);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         switch (position) {
             case 0:
-                viewHolder.image.setImageResource(R.drawable.icon_scedule);
+                viewHolder.iconImageView.setImageResource(R.drawable.icon_scedule);
                 break;
             case 1:
-                viewHolder.image.setImageResource(R.drawable.icon_news);
+                viewHolder.iconImageView.setImageResource(R.drawable.icon_news);
                 break;
             case 2:
-                viewHolder.image.setImageResource(R.drawable.icon_fouls);
+                viewHolder.iconImageView.setImageResource(R.drawable.icon_fouls);
                 break;
             case 3:
-                viewHolder.image.setImageResource(R.drawable.table_icon);
+                viewHolder.iconImageView.setImageResource(R.drawable.table_icon);
                 break;
         }
-        viewHolder.menu.setText(user);
+        viewHolder.menuTextView.setText(user);
         return convertView;
     }
 }

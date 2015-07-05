@@ -19,11 +19,11 @@ public class NewsDataAdapter extends ArrayAdapter<NewsMainData> {
 
     private static class ViewHolder {
 
-        private TextView title;
+        private TextView titleTextView;
 
-        private TextView preview;
+        private TextView previewTextView;
 
-        private TextView author;
+        private TextView authorTextView;
     }
 
     public NewsDataAdapter(Context context, List<NewsMainData> users) {
@@ -38,16 +38,16 @@ public class NewsDataAdapter extends ArrayAdapter<NewsMainData> {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.news_view, parent, false);
-            viewHolder.title = (TextView) convertView.findViewById(R.id.textTitle);
-            viewHolder.preview = (TextView) convertView.findViewById(R.id.textPreview);
-            viewHolder.author = (TextView) convertView.findViewById(R.id.textNameAuthor);
+            viewHolder.titleTextView = (TextView) convertView.findViewById(R.id.textTitle);
+            viewHolder.previewTextView = (TextView) convertView.findViewById(R.id.textPreview);
+            viewHolder.authorTextView = (TextView) convertView.findViewById(R.id.textNameAuthor);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.author.setText(user.getAuthor());
-        viewHolder.title.setText(user.getTitle());
-        viewHolder.preview.setText(user.getSubtitle());
+        viewHolder.authorTextView.setText(user.getAuthor());
+        viewHolder.titleTextView.setText(user.getTitle());
+        viewHolder.previewTextView.setText(user.getSubtitle());
         return convertView;
     }
 }
