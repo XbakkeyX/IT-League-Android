@@ -27,4 +27,14 @@ public class TableObject {
         return this.tableMainDatas;
     }
 
+    public TableObject (String leagueName, TableMainData tableMainData) {
+        this.leagueName = leagueName;
+        this.tableMainDatas = tableMainData;
+    }
+
+    public TableObject () {
+        this.leagueName = "";
+        this.tableMainDatas = new TableMainData();
+    }
+
 }

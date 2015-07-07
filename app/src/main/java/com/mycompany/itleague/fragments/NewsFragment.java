@@ -6,20 +6,22 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.HeaderViewListAdapter;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.mycompany.itleague.R;
 import com.mycompany.itleague.adapters.NewsDataAdapter;
 import com.mycompany.itleague.database.NewsTable;
-import com.mycompany.itleague.database.TeamsTable;
-import com.mycompany.itleague.internet.InternetConnection;
 import com.mycompany.itleague.manager.MainApiClientProvider;
 import com.mycompany.itleague.model.NewsMainData;
 
@@ -54,6 +56,8 @@ public class NewsFragment extends Fragment {
 
     ArrayList<NewsMainData> downloadedNews = new ArrayList<NewsMainData>();
 
+
+
     @Bean
     /*package*/
             MainApiClientProvider apiNewsClientProvider;
@@ -61,6 +65,14 @@ public class NewsFragment extends Fragment {
     @ViewById
     /*package*/
             ListView listNewsView;
+
+    @ViewById
+    /*package*/
+            TextView textViewTest;
+
+    @ViewById
+    /*package*/
+            RelativeLayout relLay;
 
     private Runnable loadMoreListItems = new Runnable() {
         @Override
@@ -131,7 +143,10 @@ public class NewsFragment extends Fragment {
             listNewsView.setOnScrollListener(new AbsListView.OnScrollListener() {
 
                 public void onScrollStateChanged(AbsListView view, int scrollState) {
-
+                    if ( scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE )
+                    {
+                        listNewsView.invalidateViews();
+                    }
                 }
 
                 public void onScroll(AbsListView view, int firstVisibleItem,
@@ -147,8 +162,8 @@ public class NewsFragment extends Fragment {
                         }
                     }
                 }
-
             });
+
         }
         adapter = new NewsDataAdapter(getActivity(), downloadedNews);
         this.setNewsInfo();
@@ -174,12 +189,17 @@ public class NewsFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapter, View v, int position,
                     long arg3) {
-                HeaderViewListAdapter ca = (HeaderViewListAdapter)adapter.getAdapter();
-                NewsMainData value = (NewsMainData) ca.getItem(position);
-                Bundle bundle = new Bundle();
-                bundle.putLong("message", value.getId());
-                NewsInfoFragment fragobj = new NewsInfoFragment();
-                fragobj.setArguments(bundle);
+                mainData = (NewsMainData) adapter.getItemAtPosition(position);
+                long tmp = mainData.getId();
+                //textViewTest.setText(tmp);
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("message", tmp);
+                    NewsInfoFragment_ fragmentNewsInfo = new NewsInfoFragment_();
+                fragmentNewsInfo.setArguments(bundle);
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragmentContainer,fragmentNewsInfo);
+                transaction.addToBackStack(null);
+                transaction.commit();
             }
         });
         this.updateNews();

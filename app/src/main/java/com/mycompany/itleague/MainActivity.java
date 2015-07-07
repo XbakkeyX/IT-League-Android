@@ -32,12 +32,12 @@ import java.util.ArrayList;
 public class MainActivity extends FragmentActivity {
 
     @ViewById(R.id.drawer_layout)
-    DrawerLayout mDrawerLayout;
+    DrawerLayout drawerLayout;
 
     @ViewById(R.id.navdrawer)
     ListView mDrawerList;
 
-    private ActionBarDrawerToggle mDrawerToggle;
+    private ActionBarDrawerToggle drawerToggle;
 
     private DrawerArrowDrawable drawerArrow;
 
@@ -60,7 +60,7 @@ public class MainActivity extends FragmentActivity {
             }
         };
 
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+        drawerToggle = new ActionBarDrawerToggle(this, drawerLayout,
                 drawerArrow, R.string.drawer_open,
                 R.string.drawer_close) {
 
@@ -74,8 +74,12 @@ public class MainActivity extends FragmentActivity {
                 invalidateOptionsMenu();
             }
         };
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-        mDrawerToggle.syncState();
+        fragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, fragmentNews)
+                .addToBackStack(null)
+                .commitAllowingStateLoss();
+        drawerLayout.setDrawerListener(drawerToggle);
+        drawerToggle.syncState();
         this.updateMenu();
     }
 
@@ -116,25 +120,25 @@ public class MainActivity extends FragmentActivity {
                                 .replace(R.id.fragmentContainer, fragmentNews)
                                 .addToBackStack(null)
                                 .commitAllowingStateLoss();
-                        mDrawerLayout.closeDrawer(mDrawerList);
+                        drawerLayout.closeDrawer(mDrawerList);
 
                         break;
                     case 2:
-                        mDrawerToggle.syncState();
+                        drawerToggle.syncState();
                         fragmentManager.beginTransaction()
                                 .replace(R.id.fragmentContainer, fragmentViolations)
                                 .addToBackStack(null)
                                 .commitAllowingStateLoss();
-                        mDrawerLayout.closeDrawer(mDrawerList);
-                        mDrawerToggle.syncState();
+                        drawerLayout.closeDrawer(mDrawerList);
+                        drawerToggle.syncState();
                         break;
                     case 3:
                         fragmentManager.beginTransaction()
                                 .replace(R.id.fragmentContainer, fragmentTable)
                                 .addToBackStack(null)
                                 .commitAllowingStateLoss();
-                        mDrawerLayout.closeDrawer(mDrawerList);
-                        mDrawerToggle.syncState();
+                        drawerLayout.closeDrawer(mDrawerList);
+                        drawerToggle.syncState();
                         break;
                 }
 
@@ -145,10 +149,10 @@ public class MainActivity extends FragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
-                mDrawerLayout.closeDrawer(mDrawerList);
+            if (drawerLayout.isDrawerOpen(mDrawerList)) {
+                drawerLayout.closeDrawer(mDrawerList);
             } else {
-                mDrawerLayout.openDrawer(mDrawerList);
+                drawerLayout.openDrawer(mDrawerList);
             }
         }
         return super.onOptionsItemSelected(item);
@@ -157,12 +161,12 @@ public class MainActivity extends FragmentActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        mDrawerToggle.syncState();
+        drawerToggle.syncState();
     }
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        mDrawerToggle.onConfigurationChanged(newConfig);
+        drawerToggle.onConfigurationChanged(newConfig);
     }
 }

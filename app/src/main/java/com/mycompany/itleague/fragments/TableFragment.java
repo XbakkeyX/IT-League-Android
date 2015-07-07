@@ -10,7 +10,6 @@ import com.activeandroid.query.Select;
 import com.mycompany.itleague.R;
 import com.mycompany.itleague.database.NewsTable;
 import com.mycompany.itleague.database.TeamsTable;
-import com.mycompany.itleague.internet.InternetConnection;
 import com.mycompany.itleague.model.TableObject;
 import com.mycompany.itleague.adapters.TableDataAdapter;
 import com.mycompany.itleague.manager.MainApiClientProvider;

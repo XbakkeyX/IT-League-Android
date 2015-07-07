@@ -11,7 +11,6 @@ import com.activeandroid.query.Select;
 import com.mycompany.itleague.R;
 import com.mycompany.itleague.adapters.ViolationsDataAdapter;
 import com.mycompany.itleague.database.ViolationTable;
-import com.mycompany.itleague.internet.InternetConnection;
 import com.mycompany.itleague.manager.MainApiClientProvider;
 import com.mycompany.itleague.model.ViolationsMainData;
 
