@@ -2,7 +2,6 @@ package com.mycompany.itleague.manager;
 
 import com.mycompany.itleague.model.NewsDataResponse;
 import com.mycompany.itleague.model.NewsMainData;
-import com.mycompany.itleague.model.TableLeaguesData;
 import com.mycompany.itleague.model.TableLeaguesResponse;
 import com.mycompany.itleague.model.ViolationsDataResponse;
 

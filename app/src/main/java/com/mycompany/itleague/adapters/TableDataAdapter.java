@@ -28,46 +28,7 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
 
     private ArrayList<String> leagueName = new ArrayList<String>();
 
-    private TableObject user;
-
-    @Override
-    public View getHeaderView(int position, View convertView, ViewGroup parent) {
-        HeaderViewHolder holder;
-        user = getItem(position);
-        if (convertView == null) {
-            holder = new HeaderViewHolder();
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.table_header, parent, false);
-            holder.leagueTextView = (TextView) convertView.findViewById(R.id.textHeaderTable);
-            holder.goalsTextView = (TextView) convertView.findViewById(R.id.goals);
-            convertView.setTag(holder);
-        } else {
-            holder = (HeaderViewHolder) convertView.getTag();
-        }
-        String headerText = new String();
-        for (int i = 0; i < leagueName.size(); i++) {
-            if (user.getLeagueName() == leagueName.get(i)) {
-                headerText = leagueName.get(i);
-            }
-        }
-        String first = "<font color='#00A42E'>+</font>" + "/";
-        String next = "<font color='#EE0000'>-</font>";
-        holder.goalsTextView.setText(Html.fromHtml(first + next));
-        holder.leagueTextView.setText(headerText);
-        return convertView;
-    }
-
-    @Override
-    public long getHeaderId(int position) {
-        user = getItem(position);
-        long tmp = 0;
-        for (int i = 0; i < leagueName.size(); i++) {
-            if (user.getLeagueName() == leagueName.get(i)) {
-                tmp = i;
-            }
-        }
-        return tmp;
-    }
+    private TableObject team;
 
     private static class ViewHolder {
 
@@ -95,6 +56,45 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
         private TextView goalsTextView;
     }
 
+    @Override
+    public View getHeaderView(int position, View convertView, ViewGroup parent) {
+        HeaderViewHolder holder;
+        team = getItem(position);
+        if (convertView == null) {
+            holder = new HeaderViewHolder();
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            convertView = inflater.inflate(R.layout.table_header, parent, false);
+            holder.leagueTextView = (TextView) convertView.findViewById(R.id.textHeaderTable);
+            holder.goalsTextView = (TextView) convertView.findViewById(R.id.goals);
+            convertView.setTag(holder);
+        } else {
+            holder = (HeaderViewHolder) convertView.getTag();
+        }
+        String headerText = new String();
+        for (String league : leagueName) {
+            if (team.getLeagueName() == league) {
+                headerText = league;
+            }
+        }
+        String first = "<font color='#00A42E'>+</font>" + "/";
+        String next = "<font color='#EE0000'>-</font>";
+        holder.goalsTextView.setText(Html.fromHtml(first + next));
+        holder.leagueTextView.setText(headerText);
+        return convertView;
+    }
+
+    @Override
+    public long getHeaderId(int position) {
+        team = getItem(position);
+        long headerId = 0;
+        for (int i = 0; i < leagueName.size(); i++) {
+            if (team.getLeagueName() == leagueName.get(i)) {
+                headerId = i;
+            }
+        }
+        return headerId;
+    }
+
     public TableDataAdapter(Context context, ArrayList<TableObject> users) {
         super(context, R.layout.table_view, users);
         String league = "";
@@ -108,7 +108,7 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        user = getItem(position);
+        team = getItem(position);
         ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
@@ -137,15 +137,15 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        viewHolder.teamPlaceTextView.setText(user.getTableMainDatas().getPosition());
-        viewHolder.teamNameTextView.setText(user.getTableMainDatas().getTeam());
-        viewHolder.teamGamesTextView.setText(user.getTableMainDatas().getGames());
-        viewHolder.teamWinsTextView.setText(user.getTableMainDatas().getWins());
-        viewHolder.teamLosesTextView.setText(user.getTableMainDatas().getLoses());
-        viewHolder.teamDrawsTextView.setText(user.getTableMainDatas().getDraws());
-        viewHolder.teamScoresTextView.setText(user.getTableMainDatas().getScores());
-        String first = user.getTableMainDatas().getGoalsFor();
-        String next = user.getTableMainDatas().getGoalsAgainst();
+        viewHolder.teamPlaceTextView.setText(team.getTableMainDatas().getPosition());
+        viewHolder.teamNameTextView.setText(team.getTableMainDatas().getTeam());
+        viewHolder.teamGamesTextView.setText(team.getTableMainDatas().getGames());
+        viewHolder.teamWinsTextView.setText(team.getTableMainDatas().getWins());
+        viewHolder.teamLosesTextView.setText(team.getTableMainDatas().getLoses());
+        viewHolder.teamDrawsTextView.setText(team.getTableMainDatas().getDraws());
+        viewHolder.teamScoresTextView.setText(team.getTableMainDatas().getScores());
+        String first = team.getTableMainDatas().getGoalsFor();
+        String next = team.getTableMainDatas().getGoalsAgainst();
         viewHolder.teamGoalsTextView.setText(first + "/" + next, TextView.BufferType.SPANNABLE);
         Spannable s = (Spannable) viewHolder.teamGoalsTextView.getText();
         s.setSpan(new ForegroundColorSpan(0xFFFF0000), first.length() + 1,

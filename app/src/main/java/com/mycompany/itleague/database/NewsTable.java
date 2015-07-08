@@ -3,19 +3,20 @@ package com.mycompany.itleague.database;
 /**
  * Created by Сергей on 04.07.2015.
  */
+
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
-//Notice how we specified the name of the table below
+
 @Table(name = "NewsTable")
 public class NewsTable extends Model {
 
-    // Notice how we specified the name of our column here
+
     @Column(name = "newsId")
     public long newsId;
 
-    // Notice how we specified the name of our column here
+
     @Column(name = "createdAt")
     public String newsCreatedAt;
 
@@ -39,12 +40,11 @@ public class NewsTable extends Model {
 
 
     public NewsTable() {
-        // Notice how super() has been called to perform default initialization
-        // of our Model subclass
         super();
     }
 
-    public NewsTable(long newsId, String newsCreatedAt, String newsUpdatedAt, String newsTitle, String newsSubtitle,
+    public NewsTable(long newsId, String newsCreatedAt, String newsUpdatedAt, String newsTitle,
+            String newsSubtitle,
             String newsAuthor, long newsCommentsCount, String newsBody) {
         super();
         this.newsId = newsId;

@@ -2,7 +2,9 @@ package com.mycompany.itleague.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 
 import com.mycompany.itleague.R;
@@ -23,9 +25,6 @@ import org.apache.commons.codec.binary.Base64;
 @EFragment(R.layout.news_info)
 public class NewsInfoFragment extends Fragment {
 
-
-
-
     @Bean
     /*package*/
             MainApiClientProvider apiNewsClientProvider;
@@ -34,28 +33,22 @@ public class NewsInfoFragment extends Fragment {
 
     private long idOfNews = 0;
 
-    StringBuilder sb;
+    StringBuilder htmlStringBuilder;
 
-
-/*
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        idOfNews = getArguments().getLong("message");
-        return inflater.inflate(R.layout.news_info, container, false);
-    }
-*/
     private String stringByReplacingIframeTagWithATag(String string) {
-
-        string = string.replace("<iframe" ,"<a");
+        string = string.replace("&lt;", "<");
+        string = string.replace("&gt;", ">");
+        string = string.replace("&amp;", "&");
+        string = string.replace("<iframe", "<a");
         string = string.replace("src=\"http://youtube", "href=\"http://youtube");
         string = string.replace("src=\"//www.youtube", "href=\"//www.youtube");
         string = string.replace("src=\"//youtube", "href=\"//youtube");
-        string = string.replace("src=\"http://coub","href=\"http://coub");
+        string = string.replace("src=\"http://coub", "href=\"http://coub");
         string = string.replace("</iframe", "Media</a");
         string = string.replace("\"//www.youtube", "\"http://www.youtube");
         return string;
     }
+
     @ViewById
     /*package*/
             WebView webViewNewsInfo;
@@ -63,26 +56,33 @@ public class NewsInfoFragment extends Fragment {
     @Background
     void updateNews() {
         Bundle args = getArguments();
-        if (args  != null && args.containsKey("message")){
+        if (args != null && args.containsKey("message")) {
             idOfNews = args.getLong("message");
         }
         String body = apiNewsClientProvider.getMainApiClient().getNewsInfo(idOfNews).getBody();
-        byte[] valueDecoded= Base64.decodeBase64(apiNewsClientProvider.getMainApiClient().getNewsInfo(idOfNews).getBody().getBytes());
+        byte[] valueDecoded = Base64.decodeBase64(
+                apiNewsClientProvider.getMainApiClient().getNewsInfo(idOfNews).getBody()
+                        .getBytes());
         System.out.println("Decoded value is " + new String(valueDecoded));
         body = new String(valueDecoded);
 
-        sb = new StringBuilder();
-        sb.append(
+        htmlStringBuilder = new StringBuilder();
+        htmlStringBuilder.append(
                 "<HTML><HEAD><LINK href=\"css/styles.css\" type=\"text/css\" rel=\"stylesheet\"/> </HEAD><body><div style=\"margin:10px; padding-bottom\">");
-        sb.append(body);
-        sb.append("</div></body></HTML>");
-        sb.append(stringByReplacingIframeTagWithATag(sb.toString()));
+
+        body = stringByReplacingIframeTagWithATag(body);
+        htmlStringBuilder.append(body);
+        htmlStringBuilder.append("</div></body></HTML>");
+
         this.setNewsInfo();
     }
 
     @UiThread
     void setNewsInfo() {
-        webViewNewsInfo.loadDataWithBaseURL("file:///android_asset/", sb.toString(), "text/html",
+        webViewNewsInfo.setWebChromeClient(new WebChromeClient());
+        webViewNewsInfo.setWebViewClient(new WebViewClient());
+        webViewNewsInfo.loadDataWithBaseURL("file:///android_asset/", htmlStringBuilder.toString(),
+                "text/html",
                 "utf-8", null);
     }
 

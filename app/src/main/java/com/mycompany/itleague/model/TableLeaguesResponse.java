@@ -1,7 +1,6 @@
 package com.mycompany.itleague.model;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Сергей on 22.06.2015.

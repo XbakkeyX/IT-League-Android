@@ -1,6 +1,5 @@
 package com.mycompany.itleague.model;
 
-import com.mycompany.itleague.model.TableMainData;
 
 /**
  * Created by Сергей on 30.06.2015.
@@ -27,12 +26,12 @@ public class TableObject {
         return this.tableMainDatas;
     }
 
-    public TableObject (String leagueName, TableMainData tableMainData) {
+    public TableObject(String leagueName, TableMainData tableMainData) {
         this.leagueName = leagueName;
         this.tableMainDatas = tableMainData;
     }
 
-    public TableObject () {
+    public TableObject() {
         this.leagueName = "";
         this.tableMainDatas = new TableMainData();
     }

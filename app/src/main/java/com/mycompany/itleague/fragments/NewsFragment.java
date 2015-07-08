@@ -1,21 +1,17 @@
 package com.mycompany.itleague.fragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.HeaderViewListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
@@ -41,7 +37,8 @@ import java.util.List;
 @EFragment(R.layout.news)
 public class NewsFragment extends Fragment {
 
-    NewsMainData mainData = new NewsMainData();
+    private NewsMainData mainData = new NewsMainData();
+
     private NewsDataAdapter adapter;
 
     private int pageNumber = 0;
@@ -55,7 +52,6 @@ public class NewsFragment extends Fragment {
     private int amountOfAllNews;
 
     ArrayList<NewsMainData> downloadedNews = new ArrayList<NewsMainData>();
-
 
 
     @Bean
@@ -84,7 +80,8 @@ public class NewsFragment extends Fragment {
 
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
-                = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+                = (ConnectivityManager) getActivity()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
@@ -92,24 +89,23 @@ public class NewsFragment extends Fragment {
     @Background
     void updateNews() {
         pageNumber = 1;
-        if(!(isNetworkAvailable())) {
+        if (!(isNetworkAvailable())) {
             Select select = new Select();
             List<NewsTable> allNews = select.all().from(NewsTable.class).execute();
-            for (int i = 0; i < allNews.size(); i++) {
+            for (NewsTable newsTable : allNews) {
                 NewsMainData oneNews = new NewsMainData();
-                oneNews.setId(allNews.get(i).newsId);
-                oneNews.setCreatedAt(allNews.get(i).newsCreatedAt);
-                oneNews.setUpdatedAt(allNews.get(i).newsUpdatedAt);
-                oneNews.setTitle(allNews.get(i).newsTitle);
-                oneNews.setSubtitle(allNews.get(i).newsSubtitle);
-                oneNews.setAuthor(allNews.get(i).newsAuthor);
-                oneNews.setCommentsCount(allNews.get(i).newsCommentsCount);
-                oneNews.setBody(allNews.get(i).newsBody);
+                oneNews.setId(newsTable.newsId);
+                oneNews.setCreatedAt(newsTable.newsCreatedAt);
+                oneNews.setUpdatedAt(newsTable.newsUpdatedAt);
+                oneNews.setTitle(newsTable.newsTitle);
+                oneNews.setSubtitle(newsTable.newsSubtitle);
+                oneNews.setAuthor(newsTable.newsAuthor);
+                oneNews.setCommentsCount(newsTable.newsCommentsCount);
+                oneNews.setBody(newsTable.newsBody);
                 downloadedNews.add(oneNews);
             }
 
-        }
-        else {
+        } else {
             downloadedNews = this.apiNewsClientProvider.getMainApiClient()
                     .getListNews(pageNumber, newsPerPage).getMainNewsData();
             amountOfAllNews = this.apiNewsClientProvider.getMainApiClient()
@@ -117,49 +113,22 @@ public class NewsFragment extends Fragment {
 
             ActiveAndroid.beginTransaction();
             try {
-                for (int i = 0; i < downloadedNews.size(); i++) {
-                    NewsTable db = new NewsTable();
-                    db.newsId = downloadedNews.get(i).getId();
-                    db.newsCreatedAt = downloadedNews.get(i).getCreatedAt();
-                    db.newsUpdatedAt = downloadedNews.get(i).getUpdatedAt();
-                    db.newsTitle = downloadedNews.get(i).getTitle();
-                    db.newsSubtitle = downloadedNews.get(i).getSubtitle();
-                    db.newsAuthor = downloadedNews.get(i).getAuthor();
-                    db.newsCommentsCount = downloadedNews.get(i).getCommentsCount();
-                    db.newsBody = downloadedNews.get(i).getBody();
-                    db.save();
+                for (NewsMainData newsMainData : downloadedNews) {
+                    NewsTable newsDataBase = new NewsTable();
+                    newsDataBase.newsId = newsMainData.getId();
+                    newsDataBase.newsCreatedAt = newsMainData.getCreatedAt();
+                    newsDataBase.newsUpdatedAt = newsMainData.getUpdatedAt();
+                    newsDataBase.newsTitle = newsMainData.getTitle();
+                    newsDataBase.newsSubtitle = newsMainData.getSubtitle();
+                    newsDataBase.newsAuthor = newsMainData.getAuthor();
+                    newsDataBase.newsCommentsCount = newsMainData.getCommentsCount();
+                    newsDataBase.newsBody = newsMainData.getBody();
+                    newsDataBase.save();
                 }
                 ActiveAndroid.setTransactionSuccessful();
             } finally {
                 ActiveAndroid.endTransaction();
             }
-            LayoutInflater inflater = LayoutInflater.from(getActivity());
-            View footerView = inflater.inflate(R.layout.news_footer, null, false);
-            listNewsView.addFooterView(footerView);
-            listNewsView.setOnScrollListener(new AbsListView.OnScrollListener() {
-
-                public void onScrollStateChanged(AbsListView view, int scrollState) {
-                    if ( scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE )
-                    {
-                        listNewsView.invalidateViews();
-                    }
-                }
-
-                public void onScroll(AbsListView view, int firstVisibleItem,
-                        int visibleItemCount, int totalItemCount) {
-
-                    int lastInScreen = firstVisibleItem + visibleItemCount;
-                    //is the bottom item visible & not loading more already ? Load more !
-                    if ((lastInScreen == totalItemCount) && !(loadingMore) && lastInScreen!=0 && totalItemCount !=0) {
-                        if (amountOfAllNews != newsCount) {
-                            Thread thread = new Thread(null, loadMoreListItems);
-                            pageNumber++;
-                            thread.start();
-                        }
-                    }
-                }
-            });
-
         }
         adapter = new NewsDataAdapter(getActivity(), downloadedNews);
         this.setNewsInfo();
@@ -187,15 +156,39 @@ public class NewsFragment extends Fragment {
                     long arg3) {
                 mainData = (NewsMainData) adapter.getItemAtPosition(position);
                 long tmp = mainData.getId();
-                //textViewTest.setText(tmp);
-                    Bundle bundle = new Bundle();
-                    bundle.putLong("message", tmp);
-                    NewsInfoFragment_ fragmentNewsInfo = new NewsInfoFragment_();
+                Bundle bundle = new Bundle();
+                bundle.putLong("message", tmp);
+                NewsInfoFragment_ fragmentNewsInfo = new NewsInfoFragment_();
                 fragmentNewsInfo.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentContainer,fragmentNewsInfo, "CanBeReturned");
+                transaction.replace(R.id.fragmentContainer, fragmentNewsInfo, "CanBeReturned");
                 transaction.addToBackStack(null);
                 transaction.commit();
+            }
+        });
+        LayoutInflater inflater = LayoutInflater.from(getActivity());
+        View footerView = inflater.inflate(R.layout.news_footer, null, false);
+        listNewsView.addFooterView(footerView);
+        listNewsView.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_IDLE) {
+                    listNewsView.invalidateViews();
+                }
+            }
+
+            public void onScroll(AbsListView view, int firstVisibleItem,
+                    int visibleItemCount, int totalItemCount) {
+
+                int lastInScreen = firstVisibleItem + visibleItemCount;
+                if ((lastInScreen == totalItemCount) && !(loadingMore) && lastInScreen != 0
+                        && totalItemCount != 0) {
+                    if (amountOfAllNews != newsCount) {
+                        Thread thread = new Thread(null, loadMoreListItems);
+                        pageNumber++;
+                        thread.start();
+                    }
+                }
             }
         });
         this.updateNews();

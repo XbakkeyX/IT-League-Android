@@ -8,8 +8,8 @@ import android.support.v4.app.Fragment;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.mycompany.itleague.R;
-import com.mycompany.itleague.database.NewsTable;
 import com.mycompany.itleague.database.TeamsTable;
+import com.mycompany.itleague.model.TableMainData;
 import com.mycompany.itleague.model.TableObject;
 import com.mycompany.itleague.adapters.TableDataAdapter;
 import com.mycompany.itleague.manager.MainApiClientProvider;
@@ -63,39 +63,38 @@ public class TableFragment extends Fragment {
 
     @Background
     void updateTable() {
-        TableLeaguesResponse tableLeaguesResponse = this.apiTableClientProvider.getMainApiClient()
-                .getTableData();
         if (!(isNetworkAvailable())) {
             Select select = new Select();
             List<TeamsTable> teams = select.all().from(TeamsTable.class).execute();
-            for (int i = 0; i < teams.size(); i++) {
+            for (TeamsTable teamsTable : teams) {
                 TableObject team = new TableObject();
-                team.setLeagueName(teams.get(i).leagueName);
-                team.setTableMainDatas(teams.get(i).teamMainData);
+                team.setLeagueName(teamsTable.leagueName);
+                team.setTableMainDatas(teamsTable.teamMainData);
                 tableObjects.add(team);
             }
         } else {
-
+            TableLeaguesResponse tableLeaguesResponse = this.apiTableClientProvider
+                    .getMainApiClient()
+                    .getTableData();
             for (TableLeaguesData tableLeaguesData : tableLeaguesResponse) {
                 tableRowsDataArrayList.addAll(tableLeaguesData.getLeagues());
             }
 
-            for (int i = 0; i < tableRowsDataArrayList.size(); i++) {
-                for (int j = 0; j < tableRowsDataArrayList.get(i).getRowList().size(); j++) {
+            for (TableRowsData rowsData : tableRowsDataArrayList) {
+                for (TableMainData mainData : rowsData.getRowList()) {
                     TableObject tableObject = new TableObject();
-                    tableObject.setLeagueName(tableRowsDataArrayList.get(i).getLeagueName());
-                    tableObject
-                            .setTableMainDatas(tableRowsDataArrayList.get(i).getRowList().get(j));
+                    tableObject.setLeagueName(rowsData.getLeagueName());
+                    tableObject.setTableMainDatas(mainData);
                     tableObjects.add(tableObject);
                 }
             }
             ActiveAndroid.beginTransaction();
             try {
-                for (int i = 0; i < tableObjects.size(); i++) {
-                    TeamsTable db = new TeamsTable();
-                    db.leagueName = tableObjects.get(i).getLeagueName();
-                    db.teamMainData = tableObjects.get(i).getTableMainDatas();
-                    db.save();
+                for (TableObject tableObject : tableObjects) {
+                    TeamsTable teamsDataBase = new TeamsTable();
+                    teamsDataBase.leagueName = tableObject.getLeagueName();
+                    teamsDataBase.teamMainData = tableObject.getTableMainDatas();
+                    teamsDataBase.save();
                 }
                 ActiveAndroid.setTransactionSuccessful();
             } finally {

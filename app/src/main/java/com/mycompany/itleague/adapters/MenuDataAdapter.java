@@ -31,7 +31,7 @@ public class MenuDataAdapter extends ArrayAdapter<String> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        String user = getItem(position);
+        String menuChoice = getItem(position);
         ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
@@ -40,10 +40,12 @@ public class MenuDataAdapter extends ArrayAdapter<String> {
             viewHolder.iconImageView = (ImageView) convertView.findViewById(R.id.imageMenu);
             viewHolder.menuTextView = (TextView) convertView.findViewById(R.id.textMenu);
 
-            Typeface fontOfMenu = Typeface.createFromAsset(getContext().getAssets(), "fonts/HelveticaNeueCyr-Thin.otf");
+            Typeface fontOfMenu = Typeface
+                    .createFromAsset(getContext().getAssets(), "fonts/HelveticaNeueCyr-Thin.otf");
 
             viewHolder.menuTextView.setTypeface(fontOfMenu);
-            viewHolder.menuTextView.setTypeface(viewHolder.menuTextView.getTypeface(),Typeface.BOLD);
+            viewHolder.menuTextView.setTypeface(viewHolder.menuTextView.getTypeface(),
+                    Typeface.BOLD);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -62,7 +64,7 @@ public class MenuDataAdapter extends ArrayAdapter<String> {
                 viewHolder.iconImageView.setImageResource(R.drawable.table_icon);
                 break;
         }
-        viewHolder.menuTextView.setText(user);
+        viewHolder.menuTextView.setText(menuChoice);
         return convertView;
     }
 }

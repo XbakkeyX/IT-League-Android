@@ -35,7 +35,7 @@ public class MainActivity extends FragmentActivity {
     DrawerLayout drawerLayout;
 
     @ViewById(R.id.navdrawer)
-    ListView mDrawerList;
+    ListView drawerList;
 
     private ActionBarDrawerToggle drawerToggle;
 
@@ -104,8 +104,8 @@ public class MainActivity extends FragmentActivity {
     @UiThread
     void setMenuInfo() {
 
-        mDrawerList.setAdapter(adapter);
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        drawerList.setAdapter(adapter);
+        drawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                     int position, long id) {
@@ -120,7 +120,7 @@ public class MainActivity extends FragmentActivity {
                                 .replace(R.id.fragmentContainer, fragmentNews)
                                 .addToBackStack(null)
                                 .commitAllowingStateLoss();
-                        drawerLayout.closeDrawer(mDrawerList);
+                        drawerLayout.closeDrawer(drawerList);
 
                         break;
                     case 2:
@@ -129,7 +129,7 @@ public class MainActivity extends FragmentActivity {
                                 .replace(R.id.fragmentContainer, fragmentViolations)
                                 .addToBackStack(null)
                                 .commitAllowingStateLoss();
-                        drawerLayout.closeDrawer(mDrawerList);
+                        drawerLayout.closeDrawer(drawerList);
                         drawerToggle.syncState();
                         break;
                     case 3:
@@ -137,7 +137,7 @@ public class MainActivity extends FragmentActivity {
                                 .replace(R.id.fragmentContainer, fragmentTable)
                                 .addToBackStack(null)
                                 .commitAllowingStateLoss();
-                        drawerLayout.closeDrawer(mDrawerList);
+                        drawerLayout.closeDrawer(drawerList);
                         drawerToggle.syncState();
                         break;
                 }
@@ -162,10 +162,10 @@ public class MainActivity extends FragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
-            if (drawerLayout.isDrawerOpen(mDrawerList)) {
-                drawerLayout.closeDrawer(mDrawerList);
+            if (drawerLayout.isDrawerOpen(drawerList)) {
+                drawerLayout.closeDrawer(drawerList);
             } else {
-                drawerLayout.openDrawer(mDrawerList);
+                drawerLayout.openDrawer(drawerList);
             }
         }
         return super.onOptionsItemSelected(item);

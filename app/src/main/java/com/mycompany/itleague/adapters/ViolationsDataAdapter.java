@@ -28,44 +28,9 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
 public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> implements
         StickyListHeadersAdapter {
 
-    public ArrayList<String> tours = new ArrayList<String>();
+    public ArrayList<String> unicTours = new ArrayList<String>();
 
-    private ViolationsMainData user;
-
-    @Override
-    public View getHeaderView(int position, View convertView, ViewGroup parent) {
-        HeaderViewHolder holder;
-        user = getItem(position);
-        if (convertView == null) {
-            holder = new HeaderViewHolder();
-            LayoutInflater inflater = LayoutInflater.from(getContext());
-            convertView = inflater.inflate(R.layout.violations_header, parent, false);
-            holder.tourTextView = (TextView) convertView.findViewById(R.id.textHeaderViolations);
-            convertView.setTag(holder);
-        } else {
-            holder = (HeaderViewHolder) convertView.getTag();
-        }
-        String headerText = new String();
-        for (int i = 0; i < tours.size(); i++) {
-            if ((user.getTourName().equals(tours.get(i)))) {
-                headerText = tours.get(i);
-            }
-        }
-        holder.tourTextView.setText(headerText);
-        return convertView;
-    }
-
-    @Override
-    public long getHeaderId(int position) {
-        user = getItem(position);
-        long tmp = 0;
-        for (int i = 0; i < tours.size(); i++) {
-            if (user.getTourName().equals(tours.get(i))) {
-                tmp = i;
-            }
-        }
-        return tmp;
-    }
+    private ViolationsMainData player;
 
 
     private static class ViewHolder {
@@ -80,28 +45,63 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> impl
         private TextView tourTextView;
     }
 
+    @Override
+    public View getHeaderView(int position, View convertView, ViewGroup parent) {
+        HeaderViewHolder holder;
+        player = getItem(position);
+        if (convertView == null) {
+            holder = new HeaderViewHolder();
+            LayoutInflater inflater = LayoutInflater.from(getContext());
+            convertView = inflater.inflate(R.layout.violations_header, parent, false);
+            holder.tourTextView = (TextView) convertView.findViewById(R.id.textHeaderViolations);
+            convertView.setTag(holder);
+        } else {
+            holder = (HeaderViewHolder) convertView.getTag();
+        }
+        String headerText = new String();
+        for (String tour : unicTours) {
+            if ((player.getTourName().equals(tour))) {
+                headerText = tour;
+            }
+        }
+        holder.tourTextView.setText(headerText);
+        return convertView;
+    }
+
+    @Override
+    public long getHeaderId(int position) {
+        player = getItem(position);
+        long headerId = 0;
+        for (int i = 0; i < unicTours.size(); i++) {
+            if (player.getTourName().equals(unicTours.get(i))) {
+                headerId = i;
+            }
+        }
+        return headerId;
+    }
+
+
     public ViolationsDataAdapter(Context context, ArrayList<ViolationsMainData> users) {
         super(context, R.layout.violations_view, users);
         String tour = "";
         for (int i = 0; i < users.size(); i++) {
             if (!(tour.equals(users.get(i).getTourName()))) {
                 tour = users.get(i).getTourName();
-                tours.add(tour);
+                unicTours.add(tour);
             }
         }
-
-
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        user = getItem(position);
+        player = getItem(position);
         ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.violations_view, parent, false);
-            Typeface fontOfName = Typeface.createFromAsset(getContext().getAssets(), "fonts/HelveticaNeue.ttf");
+            Typeface fontOfName = Typeface
+                    .createFromAsset(getContext().getAssets(), "fonts/HelveticaNeue.ttf");
             viewHolder.nameTextView = (TextView) convertView.findViewById(R.id.textViolationsView);
             viewHolder.cardImageView = (ImageView) convertView.findViewById(R.id.imageCard);
             viewHolder.nameTextView.setTypeface(fontOfName);
@@ -109,20 +109,19 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> impl
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-        String teamName = user.getTeamName();
-        if ((user.getStatsName().equals("yellow_card"))) {
+        String teamName = player.getTeamName();
+        if ((player.getStatsName().equals("yellow_card"))) {
             viewHolder.cardImageView.setImageResource(R.drawable.yellowcard);
-        } else if ((user.getStatsName().equals("red_card"))) {
+        } else if ((player.getStatsName().equals("red_card"))) {
             viewHolder.cardImageView.setImageResource(R.drawable.redcard);
         }
-
 
         Spannable wordtoSpan = new SpannableString(teamName);
         wordtoSpan.setSpan(new ForegroundColorSpan(Color.GREEN), 0, teamName.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
         viewHolder.nameTextView.setText(
-                user.getLastName() + " " + user.getFirstName() + " (" + teamName + ") ");
+                player.getLastName() + " " + player.getFirstName() + " (" + teamName + ") ");
 
         return convertView;
     }
