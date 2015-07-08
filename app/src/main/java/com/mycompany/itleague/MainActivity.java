@@ -147,6 +147,19 @@ public class MainActivity extends FragmentActivity {
     }
 
     @Override
+    public void onBackPressed() {
+
+        //NewsInfoFragment_ fragment = (NewsInfoFragment_)fragmentManager.findFragmentById(R.id.fra);
+
+        if (fragmentManager.findFragmentByTag("CanBeReturned")==null) {
+            finish();
+        }
+        else {
+            // Otherwise defer to system default behavior.
+            super.onBackPressed();
+        }
+    }
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == android.R.id.home) {
             if (drawerLayout.isDrawerOpen(mDrawerList)) {

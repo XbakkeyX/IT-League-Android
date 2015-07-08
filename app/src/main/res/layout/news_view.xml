@@ -15,8 +15,9 @@
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:singleLine="true"
+            android:textStyle="bold"
             android:text="Large Text"
-            android:id="@+id/textTitle" android:layout_marginRight="20dp" android:textSize="20dp"/>
+            android:id="@+id/textTitle" android:layout_marginRight="20dp" android:textSize="18dp"/>
     </LinearLayout>
     <LinearLayout
             android:orientation="horizontal"
@@ -30,7 +31,8 @@
             android:layout_height="52dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
-            android:id="@+id/textPreview" android:textSize="15dp"/>
+            android:id="@+id/textPreview" android:textSize="15dp"
+            android:lineSpacingExtra = "3dp"/>
         <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="42dp"
@@ -48,6 +50,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageDate" android:src="@drawable/icon_date"/>
+        <TextView
+                android:layout_marginTop="13dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginBottom="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Small Text"
+                android:id="@+id/textViewDate"/>
         <ImageView
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="30dp"

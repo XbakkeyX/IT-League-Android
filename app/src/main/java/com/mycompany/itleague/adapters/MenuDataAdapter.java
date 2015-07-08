@@ -3,6 +3,7 @@ package com.mycompany.itleague.adapters;
 import com.mycompany.itleague.R;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +39,11 @@ public class MenuDataAdapter extends ArrayAdapter<String> {
             convertView = inflater.inflate(R.layout.menu_view, parent, false);
             viewHolder.iconImageView = (ImageView) convertView.findViewById(R.id.imageMenu);
             viewHolder.menuTextView = (TextView) convertView.findViewById(R.id.textMenu);
+
+            Typeface fontOfMenu = Typeface.createFromAsset(getContext().getAssets(), "fonts/HelveticaNeueCyr-Thin.otf");
+
+            viewHolder.menuTextView.setTypeface(fontOfMenu);
+            viewHolder.menuTextView.setTypeface(viewHolder.menuTextView.getTypeface(),Typeface.BOLD);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

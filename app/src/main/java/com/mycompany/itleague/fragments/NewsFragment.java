@@ -68,10 +68,6 @@ public class NewsFragment extends Fragment {
 
     @ViewById
     /*package*/
-            TextView textViewTest;
-
-    @ViewById
-    /*package*/
             RelativeLayout relLay;
 
     private Runnable loadMoreListItems = new Runnable() {
@@ -154,7 +150,7 @@ public class NewsFragment extends Fragment {
 
                     int lastInScreen = firstVisibleItem + visibleItemCount;
                     //is the bottom item visible & not loading more already ? Load more !
-                    if ((lastInScreen == totalItemCount) && !(loadingMore)) {
+                    if ((lastInScreen == totalItemCount) && !(loadingMore) && lastInScreen!=0 && totalItemCount !=0) {
                         if (amountOfAllNews != newsCount) {
                             Thread thread = new Thread(null, loadMoreListItems);
                             pageNumber++;
@@ -197,7 +193,7 @@ public class NewsFragment extends Fragment {
                     NewsInfoFragment_ fragmentNewsInfo = new NewsInfoFragment_();
                 fragmentNewsInfo.setArguments(bundle);
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentContainer,fragmentNewsInfo);
+                transaction.replace(R.id.fragmentContainer,fragmentNewsInfo, "CanBeReturned");
                 transaction.addToBackStack(null);
                 transaction.commit();
             }

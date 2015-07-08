@@ -45,11 +45,10 @@ public class TableFragment extends Fragment {
         return this.tableRowsDataArrayList;
     }
 
-
-
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
-                = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+                = (ConnectivityManager) getActivity()
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
         return activeNetworkInfo != null && activeNetworkInfo.isConnectedOrConnecting();
     }
@@ -66,7 +65,7 @@ public class TableFragment extends Fragment {
     void updateTable() {
         TableLeaguesResponse tableLeaguesResponse = this.apiTableClientProvider.getMainApiClient()
                 .getTableData();
-        if(!(isNetworkAvailable())) {
+        if (!(isNetworkAvailable())) {
             Select select = new Select();
             List<TeamsTable> teams = select.all().from(TeamsTable.class).execute();
             for (int i = 0; i < teams.size(); i++) {
@@ -75,8 +74,7 @@ public class TableFragment extends Fragment {
                 team.setTableMainDatas(teams.get(i).teamMainData);
                 tableObjects.add(team);
             }
-        }
-        else {
+        } else {
 
             for (TableLeaguesData tableLeaguesData : tableLeaguesResponse) {
                 tableRowsDataArrayList.addAll(tableLeaguesData.getLeagues());

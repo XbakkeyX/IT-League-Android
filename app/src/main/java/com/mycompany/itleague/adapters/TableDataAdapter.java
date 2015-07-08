@@ -1,6 +1,7 @@
 package com.mycompany.itleague.adapters;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.text.Html;
 import android.text.Spannable;
 import android.text.style.ForegroundColorSpan;
@@ -113,6 +114,8 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.table_view, parent, false);
+            Typeface fontOfTable = Typeface
+                    .createFromAsset(getContext().getAssets(), "fonts/HelveticaNeue.ttf");
             viewHolder.teamPlaceTextView = (TextView) convertView.findViewById(R.id.textPlace);
             viewHolder.teamNameTextView = (TextView) convertView.findViewById(R.id.textTeamName);
             viewHolder.teamGamesTextView = (TextView) convertView.findViewById(R.id.textGames);
@@ -121,6 +124,15 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
             viewHolder.teamDrawsTextView = (TextView) convertView.findViewById(R.id.textDraws);
             viewHolder.teamScoresTextView = (TextView) convertView.findViewById(R.id.textScores);
             viewHolder.teamGoalsTextView = (TextView) convertView.findViewById(R.id.textGoals);
+            viewHolder.teamPlaceTextView.setTypeface(fontOfTable);
+            viewHolder.teamNameTextView.setTypeface(fontOfTable);
+            viewHolder.teamGamesTextView.setTypeface(fontOfTable);
+            viewHolder.teamWinsTextView.setTypeface(fontOfTable);
+            viewHolder.teamLosesTextView.setTypeface(fontOfTable);
+            viewHolder.teamDrawsTextView.setTypeface(fontOfTable);
+            viewHolder.teamScoresTextView.setTypeface(fontOfTable);
+            viewHolder.teamGoalsTextView.setTypeface(fontOfTable);
+
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();

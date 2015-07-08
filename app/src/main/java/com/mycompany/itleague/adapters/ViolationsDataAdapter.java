@@ -2,6 +2,7 @@ package com.mycompany.itleague.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
@@ -39,7 +40,7 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> impl
             holder = new HeaderViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.violations_header, parent, false);
-            holder.tour = (TextView) convertView.findViewById(R.id.textHeaderViolations);
+            holder.tourTextView = (TextView) convertView.findViewById(R.id.textHeaderViolations);
             convertView.setTag(holder);
         } else {
             holder = (HeaderViewHolder) convertView.getTag();
@@ -50,7 +51,7 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> impl
                 headerText = tours.get(i);
             }
         }
-        holder.tour.setText(headerText);
+        holder.tourTextView.setText(headerText);
         return convertView;
     }
 
@@ -69,14 +70,14 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> impl
 
     private static class ViewHolder {
 
-        private TextView name;
+        private TextView nameTextView;
 
-        private ImageView card;
+        private ImageView cardImageView;
     }
 
     private static class HeaderViewHolder {
 
-        private TextView tour;
+        private TextView tourTextView;
     }
 
     public ViolationsDataAdapter(Context context, ArrayList<ViolationsMainData> users) {
@@ -100,24 +101,27 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> impl
             viewHolder = new ViewHolder();
             LayoutInflater inflater = LayoutInflater.from(getContext());
             convertView = inflater.inflate(R.layout.violations_view, parent, false);
-            viewHolder.name = (TextView) convertView.findViewById(R.id.textViolationsView);
-            viewHolder.card = (ImageView) convertView.findViewById(R.id.imageCard);
+            Typeface fontOfName = Typeface.createFromAsset(getContext().getAssets(), "fonts/HelveticaNeue.ttf");
+            viewHolder.nameTextView = (TextView) convertView.findViewById(R.id.textViolationsView);
+            viewHolder.cardImageView = (ImageView) convertView.findViewById(R.id.imageCard);
+            viewHolder.nameTextView.setTypeface(fontOfName);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
         String teamName = user.getTeamName();
         if ((user.getStatsName().equals("yellow_card"))) {
-            viewHolder.card.setImageResource(R.drawable.yellowcard);
+            viewHolder.cardImageView.setImageResource(R.drawable.yellowcard);
         } else if ((user.getStatsName().equals("red_card"))) {
-            viewHolder.card.setImageResource(R.drawable.redcard);
+            viewHolder.cardImageView.setImageResource(R.drawable.redcard);
         }
+
 
         Spannable wordtoSpan = new SpannableString(teamName);
         wordtoSpan.setSpan(new ForegroundColorSpan(Color.GREEN), 0, teamName.length(),
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 
-        viewHolder.name.setText(
+        viewHolder.nameTextView.setText(
                 user.getLastName() + " " + user.getFirstName() + " (" + teamName + ") ");
 
         return convertView;

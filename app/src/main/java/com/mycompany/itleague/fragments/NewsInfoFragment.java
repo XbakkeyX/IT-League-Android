@@ -45,7 +45,17 @@ public class NewsInfoFragment extends Fragment {
         return inflater.inflate(R.layout.news_info, container, false);
     }
 */
+    private String stringByReplacingIframeTagWithATag(String string) {
 
+        string = string.replace("<iframe" ,"<a");
+        string = string.replace("src=\"http://youtube", "href=\"http://youtube");
+        string = string.replace("src=\"//www.youtube", "href=\"//www.youtube");
+        string = string.replace("src=\"//youtube", "href=\"//youtube");
+        string = string.replace("src=\"http://coub","href=\"http://coub");
+        string = string.replace("</iframe", "Media</a");
+        string = string.replace("\"//www.youtube", "\"http://www.youtube");
+        return string;
+    }
     @ViewById
     /*package*/
             WebView webViewNewsInfo;
@@ -66,6 +76,7 @@ public class NewsInfoFragment extends Fragment {
                 "<HTML><HEAD><LINK href=\"css/styles.css\" type=\"text/css\" rel=\"stylesheet\"/> </HEAD><body><div style=\"margin:10px; padding-bottom\">");
         sb.append(body);
         sb.append("</div></body></HTML>");
+        sb.append(stringByReplacingIframeTagWithATag(sb.toString()));
         this.setNewsInfo();
     }
 
