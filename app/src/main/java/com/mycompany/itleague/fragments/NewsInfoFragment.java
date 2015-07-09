@@ -37,7 +37,7 @@ public class NewsInfoFragment extends Fragment {
 
     private long idOfNews = 0;
 
-    StringBuilder htmlStringBuilder;
+    private StringBuilder htmlStringBuilder;
 
     private String stringByReplacingIframeTagWithATag(String string) {
         string = string.replace("&lt;", "<");

@@ -39,10 +39,10 @@ public class ViolationsFragment extends Fragment {
 
     private ViolationsDataAdapter adapter;
 
-    ArrayList<ViolationsMainData> violationsMainDataArrayList
+    private ArrayList<ViolationsMainData> violationsMainDataArrayList
             = new ArrayList<ViolationsMainData>();
 
-    ArrayList<ViolationsMainData> violationsMainDataFromDataBase
+    private ArrayList<ViolationsMainData> violationsMainDataFromDataBase
             = new ArrayList<ViolationsMainData>();
 
 
