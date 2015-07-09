@@ -16,7 +16,6 @@ public class NewsTable extends Model {
     @Column(name = "newsId")
     public long newsId;
 
-
     @Column(name = "createdAt")
     public String newsCreatedAt;
 

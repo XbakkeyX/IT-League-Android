@@ -88,7 +88,7 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
         team = getItem(position);
         long headerId = 0;
         for (int i = 0; i < leagueName.size(); i++) {
-            if (team.getLeagueName() == leagueName.get(i)) {
+            if ((team.getLeagueName().equals(leagueName.get(i)))) {
                 headerId = i;
             }
         }

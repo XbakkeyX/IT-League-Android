@@ -12,9 +12,11 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
+import com.activeandroid.util.SQLiteUtils;
 import com.mycompany.itleague.R;
 import com.mycompany.itleague.adapters.NewsDataAdapter;
 import com.mycompany.itleague.database.NewsTable;
@@ -53,6 +55,13 @@ public class NewsFragment extends Fragment {
 
     ArrayList<NewsMainData> downloadedNews = new ArrayList<NewsMainData>();
 
+    ArrayList<NewsMainData> newsFromDataBase = new ArrayList<NewsMainData>();
+
+    LayoutInflater inflater;
+
+    View footerView  ;
+
+    TextView footer;
 
     @Bean
     /*package*/
@@ -62,9 +71,7 @@ public class NewsFragment extends Fragment {
     /*package*/
             ListView listNewsView;
 
-    @ViewById
-    /*package*/
-            RelativeLayout relLay;
+
 
     private Runnable loadMoreListItems = new Runnable() {
         @Override
@@ -72,9 +79,9 @@ public class NewsFragment extends Fragment {
             loadingMore = true;
             downloadedNews.addAll(apiNewsClientProvider.getMainApiClient()
                     .getListNews(pageNumber, newsPerPage).getMainNewsData());
-            //Done! now continue on the UI thread
-            adapter = new NewsDataAdapter(getActivity(), downloadedNews);
             setNewsInfo();
+
+
         }
     };
 
@@ -91,9 +98,11 @@ public class NewsFragment extends Fragment {
         pageNumber = 1;
         if (!(isNetworkAvailable())) {
             Select select = new Select();
+            newsFromDataBase = new ArrayList<NewsMainData>();
             List<NewsTable> allNews = select.all().from(NewsTable.class).execute();
             for (NewsTable newsTable : allNews) {
                 NewsMainData oneNews = new NewsMainData();
+
                 oneNews.setId(newsTable.newsId);
                 oneNews.setCreatedAt(newsTable.newsCreatedAt);
                 oneNews.setUpdatedAt(newsTable.newsUpdatedAt);
@@ -102,15 +111,15 @@ public class NewsFragment extends Fragment {
                 oneNews.setAuthor(newsTable.newsAuthor);
                 oneNews.setCommentsCount(newsTable.newsCommentsCount);
                 oneNews.setBody(newsTable.newsBody);
-                downloadedNews.add(oneNews);
+                newsFromDataBase.add(oneNews);
             }
-
+            downloadedNews = newsFromDataBase;
         } else {
+            SQLiteUtils.execSql("DELETE FROM NewsTable");
             downloadedNews = this.apiNewsClientProvider.getMainApiClient()
                     .getListNews(pageNumber, newsPerPage).getMainNewsData();
             amountOfAllNews = this.apiNewsClientProvider.getMainApiClient()
                     .getListNews(pageNumber, newsPerPage).getNewsCount();
-
             ActiveAndroid.beginTransaction();
             try {
                 for (NewsMainData newsMainData : downloadedNews) {
@@ -130,21 +139,23 @@ public class NewsFragment extends Fragment {
                 ActiveAndroid.endTransaction();
             }
         }
-        adapter = new NewsDataAdapter(getActivity(), downloadedNews);
         this.setNewsInfo();
     }
 
     @UiThread
     void setNewsInfo() {
+        if (!(isNetworkAvailable())) {
+            footer.setText("Отсутствует подключение к интернету :(");
+        }
+        else{
+            footer.setText("Загружаем больше новостей...");
+        }
+        adapter = new NewsDataAdapter(getActivity(), downloadedNews);
+        adapter.notifyDataSetChanged();
         loadingMore = false;
         listNewsView.setAdapter(adapter);
-        listNewsView.post(new Runnable() {
-            @Override
-            public void run() {
-                int sizeOfNews = downloadedNews.size();
-                listNewsView.setSelection(sizeOfNews - 15);
-            }
-        });
+        int sizeOfNews = downloadedNews.size();
+        listNewsView.setSelection(sizeOfNews - 15);
         newsCount += newsPerPage;
     }
 
@@ -166,8 +177,9 @@ public class NewsFragment extends Fragment {
                 transaction.commit();
             }
         });
-        LayoutInflater inflater = LayoutInflater.from(getActivity());
-        View footerView = inflater.inflate(R.layout.news_footer, null, false);
+        inflater = LayoutInflater.from(getActivity());
+        footerView  = inflater.inflate(R.layout.news_footer, null, false);
+        footer = (TextView) footerView.findViewById(R.id.textViewFooter);
         listNewsView.addFooterView(footerView);
         listNewsView.setOnScrollListener(new AbsListView.OnScrollListener() {
 
@@ -183,7 +195,7 @@ public class NewsFragment extends Fragment {
                 int lastInScreen = firstVisibleItem + visibleItemCount;
                 if ((lastInScreen == totalItemCount) && !(loadingMore) && lastInScreen != 0
                         && totalItemCount != 0) {
-                    if (amountOfAllNews != newsCount) {
+                    if (amountOfAllNews != newsCount && isNetworkAvailable()) {
                         Thread thread = new Thread(null, loadMoreListItems);
                         pageNumber++;
                         thread.start();

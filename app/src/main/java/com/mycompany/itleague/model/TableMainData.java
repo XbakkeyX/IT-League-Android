@@ -86,4 +86,49 @@ public class TableMainData {
         return this.scores;
     }
 
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public void setPositionChange(String positionChange) {
+        this.positionChange = positionChange;
+    }
+
+    public void setTeam(String team) {
+        this.team = team;
+    }
+
+    public void setGames(String games) {
+        this.games = games;
+    }
+
+    public void setWins(String wins) {
+        this.wins = wins;
+    }
+
+    public void setDraws(String draws) {
+        this.draws = draws;
+    }
+
+    public void setLoses(String loses) {
+        this.loses = loses;
+    }
+
+    public void setGoalsFor(String goalsFor) {
+        this.goalsFor = goalsFor;
+    }
+
+    public void setGoalsAgainst(String goalsAgainst) {
+        this.goalsAgainst = goalsAgainst;
+    }
+
+    public void setGoalsDiff(String goalsDiff) {
+        this.goalsDiff = goalsDiff;
+    }
+
+    public void setScores(String scores) {
+        this.scores = scores;
+    }
+
+
 }

@@ -1,6 +1,10 @@
 package com.mycompany.itleague.fragments;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -40,6 +44,7 @@ public class NewsInfoFragment extends Fragment {
         string = string.replace("&gt;", ">");
         string = string.replace("&amp;", "&");
         string = string.replace("<iframe", "<a");
+        string = string.replace("src=\"//coub", "href=\"http://coub");
         string = string.replace("src=\"http://youtube", "href=\"http://youtube");
         string = string.replace("src=\"//www.youtube", "href=\"//www.youtube");
         string = string.replace("src=\"//youtube", "href=\"//youtube");
@@ -68,7 +73,7 @@ public class NewsInfoFragment extends Fragment {
 
         htmlStringBuilder = new StringBuilder();
         htmlStringBuilder.append(
-                "<HTML><HEAD><LINK href=\"css/styles.css\" type=\"text/css\" rel=\"stylesheet\"/> </HEAD><body><div style=\"margin:10px; padding-bottom\">");
+                "<HTML><HEAD><LINK href=\"css/styles.css\" type=\"text/css\" rel=\"stylesheet\"/> </HEAD><body><div style=\"margin:10px; padding-bottom:15px\">");
 
         body = stringByReplacingIframeTagWithATag(body);
         htmlStringBuilder.append(body);
@@ -79,8 +84,20 @@ public class NewsInfoFragment extends Fragment {
 
     @UiThread
     void setNewsInfo() {
+
         webViewNewsInfo.setWebChromeClient(new WebChromeClient());
-        webViewNewsInfo.setWebViewClient(new WebViewClient());
+        webViewNewsInfo.setWebViewClient(new WebViewClient(){
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                if (url != null && url.startsWith("http://")) {
+                    view.getContext().startActivity(
+                            new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+        webViewNewsInfo.getSettings().setSupportMultipleWindows(true);
         webViewNewsInfo.loadDataWithBaseURL("file:///android_asset/", htmlStringBuilder.toString(),
                 "text/html",
                 "utf-8", null);

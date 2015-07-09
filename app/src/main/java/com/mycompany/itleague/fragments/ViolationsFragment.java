@@ -8,8 +8,10 @@ import android.support.v4.app.Fragment;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
+import com.activeandroid.util.SQLiteUtils;
 import com.mycompany.itleague.R;
 import com.mycompany.itleague.adapters.ViolationsDataAdapter;
+import com.mycompany.itleague.database.TeamsTable;
 import com.mycompany.itleague.database.ViolationTable;
 import com.mycompany.itleague.manager.MainApiClientProvider;
 import com.mycompany.itleague.model.ViolationsMainData;
@@ -40,6 +42,10 @@ public class ViolationsFragment extends Fragment {
     ArrayList<ViolationsMainData> violationsMainDataArrayList
             = new ArrayList<ViolationsMainData>();
 
+    ArrayList<ViolationsMainData> violationsMainDataFromDataBase
+            = new ArrayList<ViolationsMainData>();
+
+
     @Bean
     /*package*/
             MainApiClientProvider apiViolationsClientProvider;
@@ -59,9 +65,9 @@ public class ViolationsFragment extends Fragment {
 
     @Background
     void updateViolations() {
-
         if (!(isNetworkAvailable())) {
             Select select = new Select();
+            violationsMainDataFromDataBase = new ArrayList<ViolationsMainData>();
             List<ViolationTable> players = select.all().from(ViolationTable.class).execute();
             for (ViolationTable violationTable : players) {
                 ViolationsMainData player = new ViolationsMainData();
@@ -70,8 +76,9 @@ public class ViolationsFragment extends Fragment {
                 player.setTeamName(violationTable.playerTeam);
                 player.setStatsName(violationTable.playerCard);
                 player.setTourName(violationTable.playerTour);
-                violationsMainDataArrayList.add(player);
+                violationsMainDataFromDataBase.add(player);
             }
+            violationsMainDataArrayList = violationsMainDataFromDataBase;
         } else {
             ArrayList<ArrayList<ViolationsMainData>> violationsArrayList
                     = apiViolationsClientProvider
@@ -81,6 +88,7 @@ public class ViolationsFragment extends Fragment {
                     violationsMainDataArrayList.add(violationsMainData);
                 }
             }
+            SQLiteUtils.execSql("DELETE FROM Violation");
             ActiveAndroid.beginTransaction();
             try {
                 for (ViolationsMainData violationsMainData : violationsMainDataArrayList) {
