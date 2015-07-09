@@ -53,15 +53,15 @@ public class NewsFragment extends Fragment {
 
     private int amountOfAllNews;
 
-    ArrayList<NewsMainData> downloadedNews = new ArrayList<NewsMainData>();
+    private ArrayList<NewsMainData> downloadedNews = new ArrayList<NewsMainData>();
 
-    ArrayList<NewsMainData> newsFromDataBase = new ArrayList<NewsMainData>();
+    private ArrayList<NewsMainData> newsFromDataBase = new ArrayList<NewsMainData>();
 
-    LayoutInflater inflater;
+    private LayoutInflater inflater;
 
-    View footerView  ;
+    private  View footerView;
 
-    TextView footer;
+    private TextView footer;
 
     @Bean
     /*package*/

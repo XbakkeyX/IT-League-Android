@@ -132,7 +132,6 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
             viewHolder.teamDrawsTextView.setTypeface(fontOfTable);
             viewHolder.teamScoresTextView.setTypeface(fontOfTable);
             viewHolder.teamGoalsTextView.setTypeface(fontOfTable);
-
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
