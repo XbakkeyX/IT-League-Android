@@ -161,22 +161,24 @@ public class NewsFragment extends Fragment {
 
     @AfterViews
     void newsDefault() {
-        listNewsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapter, View v, int position,
-                    long arg3) {
-                mainData = (NewsMainData) adapter.getItemAtPosition(position);
-                long tmp = mainData.getId();
-                Bundle bundle = new Bundle();
-                bundle.putLong("message", tmp);
-                NewsInfoFragment_ fragmentNewsInfo = new NewsInfoFragment_();
-                fragmentNewsInfo.setArguments(bundle);
-                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                transaction.replace(R.id.fragmentContainer, fragmentNewsInfo, "CanBeReturned");
-                transaction.addToBackStack(null);
-                transaction.commit();
-            }
-        });
+        if (isNetworkAvailable()) {
+            listNewsView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapter, View v, int position,
+                        long arg3) {
+                    mainData = (NewsMainData) adapter.getItemAtPosition(position);
+                    long tmp = mainData.getId();
+                    Bundle bundle = new Bundle();
+                    bundle.putLong("message", tmp);
+                    NewsInfoFragment_ fragmentNewsInfo = new NewsInfoFragment_();
+                    fragmentNewsInfo.setArguments(bundle);
+                    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                    transaction.replace(R.id.fragmentContainer, fragmentNewsInfo, "CanBeReturned");
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+                }
+            });
+        }
         inflater = LayoutInflater.from(getActivity());
         footerView  = inflater.inflate(R.layout.news_footer, null, false);
         footer = (TextView) footerView.findViewById(R.id.textViewFooter);
