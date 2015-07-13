@@ -98,9 +98,9 @@ public class TableDataAdapter extends ArrayAdapter<TableObject> implements
     public TableDataAdapter(Context context, ArrayList<TableObject> users) {
         super(context, R.layout.table_view, users);
         String league = "";
-        for (int i = 0; i < users.size(); i++) {
-            if (league != users.get(i).getLeagueName()) {
-                league = users.get(i).getLeagueName();
+        for (TableObject tableObject : users) {
+            if (league != tableObject.getLeagueName()) {
+                league = tableObject.getLeagueName();
                 leagueName.add(league);
             }
         }

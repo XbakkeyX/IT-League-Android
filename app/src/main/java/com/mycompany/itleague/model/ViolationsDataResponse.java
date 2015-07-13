@@ -14,9 +14,9 @@ import java.util.ArrayList;
 public class ViolationsDataResponse {
 
     @JsonProperty("violations")
-    private ArrayList<ArrayList<ViolationsMainData>> violations;
+    private ArrayList<ArrayList<ViolationModel>> violations;
 
-    public ArrayList<ArrayList<ViolationsMainData>> getMainViolationsData() {
+    public ArrayList<ArrayList<ViolationModel>> getMainViolationsData() {
         return violations;
     }
 }

@@ -1,7 +1,7 @@
 package com.mycompany.itleague.manager;
 
 import com.mycompany.itleague.model.NewsDataResponse;
-import com.mycompany.itleague.model.NewsMainData;
+import com.mycompany.itleague.model.NewsModel;
 import com.mycompany.itleague.model.TableLeaguesResponse;
 import com.mycompany.itleague.model.ViolationsDataResponse;
 
@@ -24,7 +24,7 @@ public interface MainApiClient {
 
     @Get("/news/{newsId}")
     @Accept(MediaType.APPLICATION_JSON)
-    NewsMainData getNewsInfo(long newsId);
+    NewsModel getNewsInfo(long newsId);
 
     @Get("/violations/")
     @Accept(MediaType.APPLICATION_JSON)

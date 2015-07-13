@@ -7,7 +7,6 @@ package com.mycompany.itleague.database;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
-import com.mycompany.itleague.model.TableMainData;
 
 @Table(name = "TeamTable")
 public class TeamsTable extends Model {

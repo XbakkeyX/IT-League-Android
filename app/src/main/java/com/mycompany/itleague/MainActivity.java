@@ -89,9 +89,7 @@ public class MainActivity extends FragmentActivity {
         ActionBar ab = getActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeButtonEnabled(true);
-        Context sContext = getApplicationContext();
-
-        ArrayList<String> menu = new ArrayList<String>();
+        ArrayList<String> menu = new ArrayList<>();
         menu.add("Расписание");
         menu.add("Новости");
         menu.add("Нарушения");
@@ -148,14 +146,10 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
-
-        //NewsInfoFragment_ fragment = (NewsInfoFragment_)fragmentManager.findFragmentById(R.id.fra);
-
         if (fragmentManager.findFragmentByTag("CanBeReturned")==null) {
             finish();
         }
         else {
-            // Otherwise defer to system default behavior.
             super.onBackPressed();
         }
     }

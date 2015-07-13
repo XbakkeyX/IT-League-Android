@@ -15,13 +15,13 @@ public class NewsDataResponse {
     private int newsCount;
 
     @JsonProperty("news")
-    private ArrayList<NewsMainData> mainNewsData;
+    private ArrayList<NewsModel> mainNewsData;
 
     public int getNewsCount() {
         return this.newsCount;
     }
 
-    public ArrayList<NewsMainData> getMainNewsData() {
+    public ArrayList<NewsModel> getMainNewsData() {
         return this.mainNewsData;
     }
 }

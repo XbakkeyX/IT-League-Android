@@ -8,32 +8,27 @@ public class TableObject {
 
     private String leagueName = new String();
 
-    private TableMainData tableMainDatas = new TableMainData();
+    private TableModel mTableMainDatas = new TableModel();
 
     public void setLeagueName(String res) {
         this.leagueName = res;
     }
 
-    public void setTableMainDatas(TableMainData res) {
-        this.tableMainDatas = res;
+    public void setTableMainDatas(TableModel res) {
+        this.mTableMainDatas = res;
     }
 
     public String getLeagueName() {
         return this.leagueName;
     }
 
-    public TableMainData getTableMainDatas() {
-        return this.tableMainDatas;
-    }
-
-    public TableObject(String leagueName, TableMainData tableMainData) {
-        this.leagueName = leagueName;
-        this.tableMainDatas = tableMainData;
+    public TableModel getTableMainDatas() {
+        return this.mTableMainDatas;
     }
 
     public TableObject() {
         this.leagueName = "";
-        this.tableMainDatas = new TableMainData();
+        this.mTableMainDatas = new TableModel();
     }
 
 }

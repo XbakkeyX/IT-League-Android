@@ -7,7 +7,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
  * Created by Сергей on 22.06.2015.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class NewsMainData {
+public class NewsModel {
 
     @JsonProperty("id")
     private long id;

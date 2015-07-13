@@ -1,10 +1,8 @@
 package com.mycompany.itleague.fragments;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -13,7 +11,6 @@ import android.webkit.WebViewClient;
 
 import com.mycompany.itleague.R;
 import com.mycompany.itleague.manager.MainApiClientProvider;
-import com.mycompany.itleague.model.NewsMainData;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -27,13 +24,11 @@ import org.apache.commons.codec.binary.Base64;
  * Created by Сергей on 26.06.2015.
  */
 @EFragment(R.layout.news_info)
-public class NewsInfoFragment extends Fragment {
+public class NewsDetailsFragment extends Fragment {
 
     @Bean
     /*package*/
             MainApiClientProvider apiNewsClientProvider;
-
-    private NewsMainData newsInfo = new NewsMainData();
 
     private long idOfNews = 0;
 
@@ -64,7 +59,7 @@ public class NewsInfoFragment extends Fragment {
         if (args != null && args.containsKey("message")) {
             idOfNews = args.getLong("message");
         }
-        String body = apiNewsClientProvider.getMainApiClient().getNewsInfo(idOfNews).getBody();
+        String body;
         byte[] valueDecoded = Base64.decodeBase64(
                 apiNewsClientProvider.getMainApiClient().getNewsInfo(idOfNews).getBody()
                         .getBytes());

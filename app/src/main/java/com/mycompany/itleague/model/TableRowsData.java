@@ -12,13 +12,13 @@ import java.util.List;
 public class TableRowsData {
 
     @JsonProperty("rows")
-    private List<TableMainData> tableMainData;
+    private List<TableModel> mTableModel;
 
     @JsonProperty("league_name")
     private String leagueName;
 
-    public List<TableMainData> getRowList() {
-        return this.tableMainData;
+    public List<TableModel> getRowList() {
+        return this.mTableModel;
     }
 
     public String getLeagueName() {

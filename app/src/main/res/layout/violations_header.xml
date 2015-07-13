@@ -9,6 +9,7 @@
             android:layout_height="30dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
+            android:singleLine="true"
             android:id="@+id/textHeaderViolations" android:layout_gravity="center_horizontal"
             android:background="#ff90a49e" android:textColor="#fff2f2d6" android:textSize="15dp"
             android:elegantTextHeight="false" android:paddingLeft="20dp" android:paddingTop="5dp"/>

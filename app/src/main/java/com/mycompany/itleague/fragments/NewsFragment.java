@@ -11,7 +11,6 @@ import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.activeandroid.ActiveAndroid;
@@ -21,7 +20,7 @@ import com.mycompany.itleague.R;
 import com.mycompany.itleague.adapters.NewsDataAdapter;
 import com.mycompany.itleague.database.NewsTable;
 import com.mycompany.itleague.manager.MainApiClientProvider;
-import com.mycompany.itleague.model.NewsMainData;
+import com.mycompany.itleague.model.NewsModel;
 
 import org.androidannotations.annotations.AfterViews;
 import org.androidannotations.annotations.Background;
@@ -39,7 +38,7 @@ import java.util.List;
 @EFragment(R.layout.news)
 public class NewsFragment extends Fragment {
 
-    private NewsMainData mainData = new NewsMainData();
+    private NewsModel mainData = new NewsModel();
 
     private NewsDataAdapter adapter;
 
@@ -53,9 +52,9 @@ public class NewsFragment extends Fragment {
 
     private int amountOfAllNews;
 
-    private ArrayList<NewsMainData> downloadedNews = new ArrayList<NewsMainData>();
+    private ArrayList<NewsModel> downloadedNews = new ArrayList<>();
 
-    private ArrayList<NewsMainData> newsFromDataBase = new ArrayList<NewsMainData>();
+    private ArrayList<NewsModel> newsFromDataBase = new ArrayList<>();
 
     private LayoutInflater inflater;
 
@@ -73,17 +72,13 @@ public class NewsFragment extends Fragment {
 
 
 
-    private Runnable loadMoreListItems = new Runnable() {
-        @Override
+    @Background
         public void run() {
             loadingMore = true;
             downloadedNews.addAll(apiNewsClientProvider.getMainApiClient()
                     .getListNews(pageNumber, newsPerPage).getMainNewsData());
             setNewsInfo();
-
-
         }
-    };
 
     public boolean isNetworkAvailable() {
         ConnectivityManager connectivityManager
@@ -98,10 +93,10 @@ public class NewsFragment extends Fragment {
         pageNumber = 1;
         if (!(isNetworkAvailable())) {
             Select select = new Select();
-            newsFromDataBase = new ArrayList<NewsMainData>();
+            newsFromDataBase = new ArrayList<>();
             List<NewsTable> allNews = select.all().from(NewsTable.class).execute();
             for (NewsTable newsTable : allNews) {
-                NewsMainData oneNews = new NewsMainData();
+                NewsModel oneNews = new NewsModel();
 
                 oneNews.setId(newsTable.newsId);
                 oneNews.setCreatedAt(newsTable.newsCreatedAt);
@@ -122,16 +117,16 @@ public class NewsFragment extends Fragment {
                     .getListNews(pageNumber, newsPerPage).getNewsCount();
             ActiveAndroid.beginTransaction();
             try {
-                for (NewsMainData newsMainData : downloadedNews) {
+                for (NewsModel newsModel : downloadedNews) {
                     NewsTable newsDataBase = new NewsTable();
-                    newsDataBase.newsId = newsMainData.getId();
-                    newsDataBase.newsCreatedAt = newsMainData.getCreatedAt();
-                    newsDataBase.newsUpdatedAt = newsMainData.getUpdatedAt();
-                    newsDataBase.newsTitle = newsMainData.getTitle();
-                    newsDataBase.newsSubtitle = newsMainData.getSubtitle();
-                    newsDataBase.newsAuthor = newsMainData.getAuthor();
-                    newsDataBase.newsCommentsCount = newsMainData.getCommentsCount();
-                    newsDataBase.newsBody = newsMainData.getBody();
+                    newsDataBase.newsId = newsModel.getId();
+                    newsDataBase.newsCreatedAt = newsModel.getCreatedAt();
+                    newsDataBase.newsUpdatedAt = newsModel.getUpdatedAt();
+                    newsDataBase.newsTitle = newsModel.getTitle();
+                    newsDataBase.newsSubtitle = newsModel.getSubtitle();
+                    newsDataBase.newsAuthor = newsModel.getAuthor();
+                    newsDataBase.newsCommentsCount = newsModel.getCommentsCount();
+                    newsDataBase.newsBody = newsModel.getBody();
                     newsDataBase.save();
                 }
                 ActiveAndroid.setTransactionSuccessful();
@@ -144,12 +139,8 @@ public class NewsFragment extends Fragment {
 
     @UiThread
     void setNewsInfo() {
-        if (!(isNetworkAvailable())) {
-            footer.setText("Отсутствует подключение к интернету :(");
-        }
-        else{
-            footer.setText("Загружаем больше новостей...");
-        }
+        String footerText = isNetworkAvailable()? "Загружаем больше новостей" : "Отсутствует подключение к интернету :(";
+        footer.setText(footerText);
         adapter = new NewsDataAdapter(getActivity(), downloadedNews);
         adapter.notifyDataSetChanged();
         loadingMore = false;
@@ -166,11 +157,11 @@ public class NewsFragment extends Fragment {
                 @Override
                 public void onItemClick(AdapterView<?> adapter, View v, int position,
                         long arg3) {
-                    mainData = (NewsMainData) adapter.getItemAtPosition(position);
+                    mainData = (NewsModel) adapter.getItemAtPosition(position);
                     long tmp = mainData.getId();
                     Bundle bundle = new Bundle();
                     bundle.putLong("message", tmp);
-                    NewsInfoFragment_ fragmentNewsInfo = new NewsInfoFragment_();
+                    NewsDetailsFragment_ fragmentNewsInfo = new NewsDetailsFragment_();
                     fragmentNewsInfo.setArguments(bundle);
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
                     transaction.replace(R.id.fragmentContainer, fragmentNewsInfo, "CanBeReturned");
@@ -198,9 +189,8 @@ public class NewsFragment extends Fragment {
                 if ((lastInScreen == totalItemCount) && !(loadingMore) && lastInScreen != 0
                         && totalItemCount != 0) {
                     if (amountOfAllNews != newsCount && isNetworkAvailable()) {
-                        Thread thread = new Thread(null, loadMoreListItems);
                         pageNumber++;
-                        thread.start();
+                        run();
                     }
                 }
             }

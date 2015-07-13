@@ -8,7 +8,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
  */
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ViolationsMainData {
+public class ViolationModel {
 
     @JsonProperty("team_name")
     private String teamName;

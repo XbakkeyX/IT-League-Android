@@ -7,7 +7,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
  * Created by Сергей on 22.06.2015.
  */
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class TableMainData {
+public class TableModel {
 
     @JsonProperty("position")
     private String position;
@@ -88,10 +88,6 @@ public class TableMainData {
 
     public void setPosition(String position) {
         this.position = position;
-    }
-
-    public void setPositionChange(String positionChange) {
-        this.positionChange = positionChange;
     }
 
     public void setTeam(String team) {

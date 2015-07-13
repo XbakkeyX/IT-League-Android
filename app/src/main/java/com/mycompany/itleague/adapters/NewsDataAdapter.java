@@ -9,7 +9,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.mycompany.itleague.R;
-import com.mycompany.itleague.model.NewsMainData;
+import com.mycompany.itleague.model.NewsModel;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by Сергей on 26.06.2015.
  */
-public class NewsDataAdapter extends ArrayAdapter<NewsMainData> {
+public class NewsDataAdapter extends ArrayAdapter<NewsModel> {
 
     private static class ViewHolder {
 
@@ -31,13 +31,13 @@ public class NewsDataAdapter extends ArrayAdapter<NewsMainData> {
         private TextView dateTextView;
     }
 
-    public NewsDataAdapter(Context context, List<NewsMainData> users) {
+    public NewsDataAdapter(Context context, List<NewsModel> users) {
         super(context, R.layout.news_view, users);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        NewsMainData newsData = getItem(position);
+        NewsModel newsData = getItem(position);
         ViewHolder viewHolder;
         if (convertView == null) {
             viewHolder = new ViewHolder();

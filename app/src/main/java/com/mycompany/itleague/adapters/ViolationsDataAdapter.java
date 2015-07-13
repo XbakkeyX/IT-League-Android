@@ -14,7 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mycompany.itleague.R;
-import com.mycompany.itleague.model.ViolationsMainData;
+import com.mycompany.itleague.model.ViolationModel;
 
 import java.util.ArrayList;
 
@@ -25,12 +25,12 @@ import se.emilsjolander.stickylistheaders.StickyListHeadersAdapter;
  */
 
 
-public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> implements
+public class ViolationsDataAdapter extends ArrayAdapter<ViolationModel> implements
         StickyListHeadersAdapter {
 
-    public ArrayList<String> unicTours = new ArrayList<String>();
+    public ArrayList<String> unicTours = new ArrayList<>();
 
-    private ViolationsMainData player;
+    private ViolationModel player;
 
 
     private static class ViewHolder {
@@ -58,7 +58,7 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> impl
         } else {
             holder = (HeaderViewHolder) convertView.getTag();
         }
-        String headerText = new String();
+        String headerText = "";
         for (String tour : unicTours) {
             if ((player.getTourName().equals(tour))) {
                 headerText = tour;
@@ -81,12 +81,12 @@ public class ViolationsDataAdapter extends ArrayAdapter<ViolationsMainData> impl
     }
 
 
-    public ViolationsDataAdapter(Context context, ArrayList<ViolationsMainData> users) {
+    public ViolationsDataAdapter(Context context, ArrayList<ViolationModel> users) {
         super(context, R.layout.violations_view, users);
         String tour = "";
-        for (int i = 0; i < users.size(); i++) {
-            if (!(tour.equals(users.get(i).getTourName()))) {
-                tour = users.get(i).getTourName();
+        for (ViolationModel violationModel : users) {
+            if (!(tour.equals(violationModel.getTourName()))) {
+                tour = violationModel.getTourName();
                 unicTours.add(tour);
             }
         }

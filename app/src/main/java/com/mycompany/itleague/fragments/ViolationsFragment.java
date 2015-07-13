@@ -11,10 +11,9 @@ import com.activeandroid.query.Select;
 import com.activeandroid.util.SQLiteUtils;
 import com.mycompany.itleague.R;
 import com.mycompany.itleague.adapters.ViolationsDataAdapter;
-import com.mycompany.itleague.database.TeamsTable;
 import com.mycompany.itleague.database.ViolationTable;
 import com.mycompany.itleague.manager.MainApiClientProvider;
-import com.mycompany.itleague.model.ViolationsMainData;
+import com.mycompany.itleague.model.ViolationModel;
 
 
 import org.androidannotations.annotations.AfterViews;
@@ -39,11 +38,11 @@ public class ViolationsFragment extends Fragment {
 
     private ViolationsDataAdapter adapter;
 
-    private ArrayList<ViolationsMainData> violationsMainDataArrayList
-            = new ArrayList<ViolationsMainData>();
+    private ArrayList<ViolationModel> violationMainDatas
+            = new ArrayList<>();
 
-    private ArrayList<ViolationsMainData> violationsMainDataFromDataBase
-            = new ArrayList<ViolationsMainData>();
+    private ArrayList<ViolationModel> violationFromDataBase
+            = new ArrayList<>();
 
 
     @Bean
@@ -67,37 +66,38 @@ public class ViolationsFragment extends Fragment {
     void updateViolations() {
         if (!(isNetworkAvailable())) {
             Select select = new Select();
-            violationsMainDataFromDataBase = new ArrayList<ViolationsMainData>();
+            violationFromDataBase = new ArrayList<>();
             List<ViolationTable> players = select.all().from(ViolationTable.class).execute();
             for (ViolationTable violationTable : players) {
-                ViolationsMainData player = new ViolationsMainData();
+                ViolationModel player = new ViolationModel();
                 player.setFirstName(violationTable.playerFirstName);
                 player.setLastName(violationTable.playerSecondName);
                 player.setTeamName(violationTable.playerTeam);
                 player.setStatsName(violationTable.playerCard);
                 player.setTourName(violationTable.playerTour);
-                violationsMainDataFromDataBase.add(player);
+                violationFromDataBase.add(player);
             }
-            violationsMainDataArrayList = violationsMainDataFromDataBase;
+            violationMainDatas = violationFromDataBase;
         } else {
-            ArrayList<ArrayList<ViolationsMainData>> violationsArrayList
+            ArrayList<ArrayList<ViolationModel>> violationsArrayList
                     = apiViolationsClientProvider
                     .getMainApiClient().getViolationInfo().getMainViolationsData();
-            for (ArrayList<ViolationsMainData> violationsMainDatas : violationsArrayList) {
-                for (ViolationsMainData violationsMainData : violationsMainDatas) {
-                    violationsMainDataArrayList.add(violationsMainData);
+            violationMainDatas = new ArrayList<>();
+            for (ArrayList<ViolationModel> violationModels : violationsArrayList) {
+                for (ViolationModel violationModel : violationModels) {
+                    violationMainDatas.add(violationModel);
                 }
             }
             SQLiteUtils.execSql("DELETE FROM Violation");
             ActiveAndroid.beginTransaction();
             try {
-                for (ViolationsMainData violationsMainData : violationsMainDataArrayList) {
+                for (ViolationModel violationModel : violationMainDatas) {
                     ViolationTable violationDataBase = new ViolationTable();
-                    violationDataBase.playerFirstName = violationsMainData.getFirstName();
-                    violationDataBase.playerSecondName = violationsMainData.getLastName();
-                    violationDataBase.playerTeam = violationsMainData.getTeamName();
-                    violationDataBase.playerCard = violationsMainData.getStatsName();
-                    violationDataBase.playerTour = violationsMainData.getTourName();
+                    violationDataBase.playerFirstName = violationModel.getFirstName();
+                    violationDataBase.playerSecondName = violationModel.getLastName();
+                    violationDataBase.playerTeam = violationModel.getTeamName();
+                    violationDataBase.playerCard = violationModel.getStatsName();
+                    violationDataBase.playerTour = violationModel.getTourName();
                     violationDataBase.save();
                 }
                 ActiveAndroid.setTransactionSuccessful();
@@ -105,7 +105,7 @@ public class ViolationsFragment extends Fragment {
                 ActiveAndroid.endTransaction();
             }
         }
-        adapter = new ViolationsDataAdapter(getActivity(), violationsMainDataArrayList);
+        adapter = new ViolationsDataAdapter(getActivity(), violationMainDatas);
         this.setViolationInfo();
     }
 
