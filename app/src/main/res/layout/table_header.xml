@@ -9,9 +9,11 @@
             android:layout_height="30dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
-            android:id="@+id/textHeaderTable" android:layout_gravity="center_horizontal"
+            android:id="@+id/textHeaderTable"
+            android:singleLine="true"
+            android:layout_gravity="center_horizontal"
             android:background="#ff90a49e" android:textColor="#fff2f2d6" android:textSize="15dp"
-            android:elegantTextHeight="false" android:paddingLeft="15dp" android:paddingTop="5dp"
+            android:elegantTextHeight="false" android:paddingLeft="10dp" android:paddingTop="5dp"
             />
     <TextView
             android:layout_width="25dp"
